@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database: mysql
+    hibernate:
+      ddl-auto: update
+
+# ?? ?? ? ?? ??? ?? ??
+server:
+  port: 8084
+  servlet:
+    encoding:
+      force-response: true
