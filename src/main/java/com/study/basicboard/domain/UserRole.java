@@ -1,2 +1,4 @@
-package com.study.basicboard.domain;public class UserRole {
+package com.study.basicboard.domain;
+
+public class UserRole {
 }
