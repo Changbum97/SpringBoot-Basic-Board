@@ -9,7 +9,7 @@ spring:
     hibernate:
       ddl-auto: update
 
-# ?? ?? ? ?? ??? ?? ??
+# 한글 깨짐 현상 방지 및 포트 변경
 server:
   port: 8084
   servlet:
