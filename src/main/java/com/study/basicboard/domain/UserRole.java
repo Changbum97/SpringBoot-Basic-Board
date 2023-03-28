@@ -1,4 +1,5 @@
 package com.study.basicboard.domain;
 
-public class UserRole {
+public enum UserRole {
+    BRONZE, SILVER, GOLD, BLACKLIST, ADMIN;
 }
