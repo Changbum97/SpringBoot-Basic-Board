@@ -19,11 +19,11 @@ import javax.persistence.Id;
 public class User {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id;            // DB에서 구분할 아이디
 
-    private String loginId;
-    private String password;
-    private String nickname;
+    private String loginId;     // 로그인할 때 사용하는 아이디
+    private String password;    // 비밀번호
+    private String nickname;    // 닉네임
 
-    private UserRole userRole;
+    private UserRole userRole;  // 권한
 }
