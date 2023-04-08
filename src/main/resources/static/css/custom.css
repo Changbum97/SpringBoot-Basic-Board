@@ -1,0 +1,28 @@
+.nav-btn {
+    background-color: lightcyan;
+    font-weight: bold;
+    border: none;
+    height: 40px;
+    width: 100px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.nav-btn:hover, .nav-btn:focus, .nav-btn:active:focus {
+    background-color: cyan;
+    animation: jelly 0.5s;
+}
+
+@keyframes jelly {
+    25% {
+        transform: scale(0.9, 1.1);
+    }
+
+    50% {
+        transform: scale(1.1, 0.9);
+    }
+
+    75% {
+        transform: scale(0.95, 1.05);
+    }
+}
