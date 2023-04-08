@@ -12,7 +12,7 @@
 
 <body>
 
-<div th:fragment="header">
+<div th:fragment="header (pageName)">
     <!-- Bootstrap 5.2.3 Version -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 
@@ -22,7 +22,8 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">홈</a>
+                        <a th:if="${pageName == 'home'}" class="nav-link active" aria-current="page" href="/">Home</a>
+                        <a th:unless="${pageName == 'home'}" class="nav-link" aria-current="page" href="/">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/boards/greeting">가입인사</a>
