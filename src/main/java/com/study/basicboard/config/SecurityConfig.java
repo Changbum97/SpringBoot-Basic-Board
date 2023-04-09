@@ -17,12 +17,15 @@ public class SecurityConfig {
 
     private final UserRepository userRepository;
 
+    // 로그인하지 않은 유저들만 접근 가능한 URL
+    private static final String[] anonymousUserUrl = {"/users/login", "/users/join"};
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf().disable()
                 .cors().and()
                 .authorizeRequests()
+                .antMatchers(anonymousUserUrl).anonymous()
                 .antMatchers("/**").permitAll()
                 .and()
                 // 폼 로그인
