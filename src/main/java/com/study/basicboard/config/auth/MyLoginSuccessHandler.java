@@ -2,7 +2,6 @@ package com.study.basicboard.config.auth;
 
 import com.study.basicboard.repository.UserRepository;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -14,7 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @AllArgsConstructor
-public class LoginSuccessHandler implements AuthenticationSuccessHandler {
+public class MyLoginSuccessHandler implements AuthenticationSuccessHandler {
 
     private UserRepository userRepository;
 
