@@ -13,6 +13,19 @@
     animation: jelly 0.5s;
 }
 
+.user-btn {
+    background-color: lime;
+    font-weight: bold;
+    border: none;
+    height: 40px;
+    width: 100px;
+}
+
+.user-btn:hover, .user-btn:focus, .user-btn:active:focus {
+    background-color: limegreen;
+    animation: jelly 0.5s;
+}
+
 @keyframes jelly {
     25% {
         transform: scale(0.9, 1.1);
@@ -25,4 +38,29 @@
     75% {
         transform: scale(0.95, 1.05);
     }
+}
+
+.user-form {
+    width: max-content;
+    height: max-content;
+    background-color: lightgoldenrodyellow;
+    border: solid 1px yellow;
+    border-radius: 30px;
+    padding: 50px 50px 30px 50px;
+}
+
+.user-form>div>label {
+    font-weight: bold;
+}
+
+.user-form>div>input {
+    width: 300px;
+}
+
+.error-input {
+    border-color: red;
+}
+
+.error-div {
+    color: red;
 }
