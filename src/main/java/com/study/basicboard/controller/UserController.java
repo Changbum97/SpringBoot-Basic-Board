@@ -1,16 +1,15 @@
 package com.study.basicboard.controller;
 
 import com.study.basicboard.domain.dto.UserJoinRequest;
+import com.study.basicboard.domain.dto.UserLoginRequest;
 import com.study.basicboard.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -40,7 +39,9 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String loginPage() {
+    public String loginPage(Model model) {
+        model.addAttribute("userLoginRequest", new UserLoginRequest());
         return "users/login";
     }
+
 }

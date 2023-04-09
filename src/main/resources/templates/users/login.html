@@ -1,28 +1,35 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header.html :: head" />
 <body>
 <div th:replace="fragments/header.html :: header ('login')"/>
 <div class="row">
-    <form class="offset-4 col-4 form-group" th:method="post" th:action="@{/users/login}" th:object="${userLoginRequest}" align="center">
+    <form class="offset-4 col-4 form-group user-form" th:method="post" th:action="@{/users/login}" th:object="${userLoginRequest}" align="left">
         <div>
-            <label th:for="userName">UserName : </label>
-            <input type="text" th:field="*{userName}"/>
+            <label th:for="loginId">아이디</label><br/>
+            <input type="text" th:field="*{loginId}" placeholder="아이디를 입력해주세요."/>
         </div>
         <br/>
         <div>
-            <label th:for="password">Password : </label>
-            <input type="password" th:field="*{password}"/>
+            <label th:for="password">비밀번호</label><br/>
+            <input type="password" th:field="*{password}" placeholder="비밀번호를 입력해주세요."/>
         </div>
         <br/>
-        <div th:if="${#fields.hasGlobalErrors()}">
-            <div class="error-class" th:each="error : ${#fields.globalErrors()}" th:text="${error}" />
-        </div>
+        <div id="login-fail" class="error-div" align="center" hidden>아이디 또는 비밀번호가 일치하지 않습니다.</div>
         <br/>
         <div align="center">
-            <button class="btn body-btn" type="submit">로그인</button>
+            <button class="btn user-btn" type="submit">로그인</button>
         </div>
     </form>
 </div>
+
+<script th:inline="javascript">
+    window.onload = function () {
+        if(location.href.includes("fail")) {
+            document.getElementById("login-fail").removeAttribute("hidden");
+        }
+    }
+</script>
+
 </body>
 </html>
