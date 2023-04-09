@@ -28,5 +28,15 @@ public class MakeInitData {
                 .build();
 
         userRepository.save(admin);
+
+        User user = User.builder()
+                .loginId("user")
+                .password(encoder.encode("1234"))
+                .createdAt(LocalDateTime.now())
+                .nickname("유저1")
+                .userRole(UserRole.BRONZE)
+                .build();
+
+        userRepository.save(user);
     }
 }
