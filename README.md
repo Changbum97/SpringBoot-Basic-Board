@@ -1,16 +1,42 @@
 # Spring Boot 게시판
 
-## 기능
+## 개발 환경
+
+- JAVA 11
+- Framework : SpringBoot 2.7.9
+- Build : Gradle 7.6.1
+- Server : AWS EC2
+- Deploy : Docker
+- Database : MySQL 8.0
+
+## 라이브러리
+
+- Spring Boot Web
+- Lombok
+- Spring Data Jpa, MySQL
+- Spring Security
+- Spring Boot DevTools
+- Thymeleaf, Validation, thymeleaf-extras-springsecurity5
+
+## 기능, End Point
 
 ### 유저 기능
 
-- 회원가입
-  - 아이디, 닉네임 중복 가입 불가
+- 회원가입 기능
+  - GET /users/join => 회원가입 페이지
+  - POST /users/join => 회원가입
+  - 아이디, 닉네임 중복 불가
   - 비밀번호, 비밀번호 확인이 일치해야 가입 가능
   - 비밀번호는 암호화해서 저장
-- 로그인
-  - 로그인 아이디, 비밀번호로 로그인
-  - 로그인 성공시 화면 상단에 로그인 한 유저의 닉네임 출력
+  - 회원가입 시 유저의 등급은 BRONZE로 설정
+  - 회원가입 성공시 성공 메세지 출력 후 로그인 화면으로 redirect
+  - 로그인 한 유저는 회원가입 페이지에 접근할 수 없음
+- 로그인 기능
+  - GET /users/login => 로그인 페이지
+  - POST /users/login => 로그인
+  - 아이디(loginId), 비밀번호로 로그인
+  - 로그인 성공시 성공 메세지 출력 후 홈 화면으로 redirect
+  - 로그인 한 유저는 로그인 페이지에 접근할 수 없음
 - 마이 페이지
   - 회원 정보(비밀번호, 닉네임) 수정 가능
   - 회원 탈퇴 가능
@@ -25,10 +51,12 @@
 - 가입 인사를 작성하면 SILVER 등급
 - 작성한 모든 글의 좋아요 총합이 10개가 넘으면 GOLD 등급
 - GOLD 등급의 유저만이 골드 게시판 접근 가능
-- ADMIN은 모든 유저가 작성한 글, 댓글 삭제 가능
-- ADMIN만 공지사항 작성 가능
-- ADMIN은 다른 유저의 등급 변경 가능
 - BLACKLIST는 글, 댓글을 작성할 수 없음
+- 관리자 권한
+  - ADMIN은 모든 유저가 작성한 글, 댓글 삭제 가능
+  - ADMIN만 공지사항 작성 가능
+  - ADMIN은 모든 유저의 등급 변경 가능
+  - ADMIN은 모든 유저가 쓴 글, 댓글, 좋아요의 개수를 확인할 수 있음
 
 ### 게시판 기능
 
