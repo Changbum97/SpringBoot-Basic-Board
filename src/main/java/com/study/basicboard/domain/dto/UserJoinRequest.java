@@ -1,6 +1,6 @@
 package com.study.basicboard.domain.dto;
 
-import com.study.basicboard.domain.UserRole;
+import com.study.basicboard.domain.enum_class.UserRole;
 import com.study.basicboard.domain.entity.User;
 import lombok.Data;
 

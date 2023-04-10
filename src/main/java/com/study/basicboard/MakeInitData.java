@@ -1,7 +1,10 @@
 package com.study.basicboard;
 
-import com.study.basicboard.domain.UserRole;
+import com.study.basicboard.domain.entity.Board;
+import com.study.basicboard.domain.enum_class.BoardCategory;
+import com.study.basicboard.domain.enum_class.UserRole;
 import com.study.basicboard.domain.entity.User;
+import com.study.basicboard.repository.BoardRepository;
 import com.study.basicboard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,6 +18,7 @@ import java.time.LocalDateTime;
 public class MakeInitData {
 
     private final UserRepository userRepository;
+    private final BoardRepository boardRepository;
     private final BCryptPasswordEncoder encoder;
 
     @PostConstruct
@@ -38,5 +42,14 @@ public class MakeInitData {
                 .build();
 
         userRepository.save(user);
+
+        Board board = Board.builder()
+                .title("제목1")
+                .body("내용111")
+                .category(BoardCategory.FREE)
+                .user(user)
+                .build();
+
+        boardRepository.save(board);
     }
 }

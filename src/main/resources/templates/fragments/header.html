@@ -20,19 +20,23 @@
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Basic Board</a>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <!--<ul class="navbar-nav">-->
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a th:if="${pageName == 'home'}" class="nav-link active" aria-current="page" href="/">Home</a>
                         <a th:unless="${pageName == 'home'}" class="nav-link" aria-current="page" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/boards/greeting">가입인사</a>
+                        <a th:if="${pageName == 'greeting'}" class="nav-link active" aria-current="page" href="/boards/greeting">가입인사</a>
+                        <a th:unless="${pageName == 'greeting'}" class="nav-link" aria-current="page" href="/boards/greeting">가입인사</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/boards/free">자유게시판</a>
+                        <a th:if="${pageName == 'free'}" class="nav-link active" aria-current="page" href="/boards/free">자유게시판</a>
+                        <a th:unless="${pageName == 'free'}" class="nav-link" aria-current="page" href="/boards/free">자유게시판</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/boards/free">골드게시판</a>
+                        <a th:if="${pageName == 'gold'}" class="nav-link active" aria-current="page" href="/boards/gold">골드게시판</a>
+                        <a th:unless="${pageName == 'gold'}" class="nav-link" aria-current="page" href="/boards/gold">골드게시판</a>
                     </li>
                 </ul>
             </div>
@@ -51,10 +55,10 @@
                 <!-- 로그인 했을때 -->
                 <ul class="navbar-nav" sec:authorize="isAuthenticated()">
                     <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
-                        <button class="btn nav-btn" onclick="location.href = '/admin'">권한 수정</button>
+                        <button class="btn nav-btn" onclick="location.href = '/admin'">관리자 페이지</button>
                     </li>
                     <li class="nav-item">
-                        <button class="btn nav-btn" onclick="location.href = '/posts/my-feed/post'">마이페이지</button>
+                        <button class="btn nav-btn" onclick="location.href = '/users/mypage'">마이페이지</button>
                     </li>
                     <li class="nav-item">
                         <button class="btn nav-btn" onclick="location.href = '/users/logout'">로그아웃</button>

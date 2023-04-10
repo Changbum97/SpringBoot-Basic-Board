@@ -64,3 +64,7 @@
 .error-div {
     color: red;
 }
+
+.nav-link.active {
+    font-weight: bold;
+}
