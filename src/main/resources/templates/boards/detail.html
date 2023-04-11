@@ -4,34 +4,42 @@
 <body>
 <div th:replace="fragments/header.html :: header (${category})"/>
 <div class="row">
-    <div class="offset-2 col-8">
-        <!--<h5>글 개수 : [[${totalElements}]]</h5>-->
-        <table class="table list-table table-hover text-center">
-            <thead style="background-color: #A5F1E9">
-            <tr>
-                <th style="width: 15%">작성자</th>
-                <th style="width: 40%">제목</th>
-                <th style="width: 10%">조회수</th>
-                <th style="width: 10%">좋아요</th>
-                <th style="width: 10%">댓글</th>
-                <th style="width: 15%">작성일</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="board: ${boards}" th:onclick="|location.href='@{/boards/{boardId} (boardId=${board.id})}'|">
-                <td style="width: 15%" th:text="${board.user.nickname}"/>
-                <td style="width: 40%" th:text="${board.title}"/>
-                <!--<td style="width: 20%" th:text="${board.nickname}"/>-->
-                <td style="width: 10%" th:text="0"/>
-                <td style="width: 10%" th:text="0"/>
-                <td style="width: 10%" th:text="0"/>
-                <td style="width: 15%" th:text="${#temporals.format(board.createdAt, 'yy/MM/dd HH:mm')}"/>
-                <!--<td style="width: 7%" th:text="${board.likeCount}"/>
-                <td style="width: 7%" th:text="${board.commentCount}"/>-->
-            </tr>
-            </tbody>
-        </table>
+    <form class="offset-3 col-6 form-group" th:object="${boardDto}" th:method="post"
+          th:action="|@{/boards/{category}/{boardId} (category = ${category}, boardId=${boardDto.id})}|">
+        <div>
+            <label th:for="title">제목 : </label>
+            <input type="text" th:field="*{title}" readonly>
+        </div>
+        <br/>
+        <div th:text="'작성자 : ' + *{userNickname}"></div>
+        <br/>
+        <div th:text="'작성일 : ' + ${#temporals.format(boardDto.createdAt, 'yy/MM/dd HH:mm')}"></div>
+        <br/>
+        <div>
+            <label th:for="body">내용 : </label>
+            <textarea rows="10" style="width: 100%;" th:field="*{body}" readonly/>
+        </div>
+        <br/>
+        <div id="div2" align="center" hidden>
+            <button class="btn post-btn" type="submit">수정 완료</button>
+        </div>
+    </form>
+    <div id="div1" th:if="${loginUserLoginId == boardDto.userLoginId}" align="center">
+        <button class="btn post-btn" onclick="clickEdit()">수정</button>
+        <button class="btn del-btn" onclick="clickDelete()">삭제</button>
     </div>
 </div>
+
+<script th:inline="javascript">
+    function clickEdit() {
+        document.getElementById("div1").style.display = 'none';
+        document.getElementById("div2").removeAttribute("hidden");
+        document.getElementById("title").removeAttribute("readonly");
+        document.getElementById("body").removeAttribute("readonly");
+    }
+    function clickDelete() {
+        alert("삭제")
+    }
+</script>
 </body>
 </html>

@@ -9,23 +9,24 @@
         <table class="table list-table table-hover text-center">
             <thead style="background-color: #A5F1E9">
             <tr>
-                <th style="width: 10%">#</th>
-                <th style="width: 30%">제목</th>
-                <th style="width: 20%">작성자</th>
-                <th style="width: 20%">작성일</th>
+                <th style="width: 15%">작성자</th>
+                <th style="width: 40%">제목</th>
+                <th style="width: 10%">조회수</th>
                 <th style="width: 10%">좋아요</th>
                 <th style="width: 10%">댓글</th>
+                <th style="width: 15%">작성일</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="board: ${boards}" th:onclick="|location.href='@{/boards/{boardId} (boardId=${board.id})}'|">
-                <td style="width: 10%" th:text="${board.id}"/>
-                <td style="width: 30%" th:text="${board.title}"/>
-                <td style="width: 20%" th:text="${board.user.nickname}"/>
+            <tr th:each="board: ${boards}"
+                th:onclick="|location.href='@{/boards/{category}/{boardId} (category=${category}, boardId=${board.id})}'|">
+                <td style="width: 15%" th:text="${board.user.nickname}"/>
+                <td style="width: 40%" th:text="${board.title}"/>
                 <!--<td style="width: 20%" th:text="${board.nickname}"/>-->
-                <td style="width: 20%" th:text="${#temporals.format(board.createdAt, 'yy/MM/dd HH:mm')}"/>
-                <td style="width: 10%" th:text="${#temporals.format(board.createdAt, 'yy/MM/dd HH:mm')}"/>
-                <td style="width: 10%" th:text="${#temporals.format(board.createdAt, 'yy/MM/dd HH:mm')}"/>
+                <td style="width: 10%" th:text="0"/>
+                <td style="width: 10%" th:text="0"/>
+                <td style="width: 10%" th:text="0"/>
+                <td style="width: 15%" th:text="${#temporals.format(board.createdAt, 'yy/MM/dd HH:mm')}"/>
                 <!--<td style="width: 7%" th:text="${board.likeCount}"/>
                 <td style="width: 7%" th:text="${board.commentCount}"/>-->
             </tr>

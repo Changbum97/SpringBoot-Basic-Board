@@ -26,6 +26,32 @@
     animation: jelly 0.5s;
 }
 
+.post-btn {
+    background-color: lime;
+    font-weight: bold;
+    border: none;
+    height: 40px;
+    width: 100px;
+}
+
+.post-btn:hover, .post-btn:focus, .post-btn:active:focus {
+    background-color: limegreen;
+    animation: jelly 0.5s;
+}
+
+.del-btn {
+    background-color: orangered;
+    font-weight: bold;
+    border: none;
+    height: 40px;
+    width: 100px;
+}
+
+.del-btn:hover, .del-btn:focus, .del-btn:active:focus {
+    background-color: #CC0000;
+    animation: jelly 0.5s;
+}
+
 @keyframes jelly {
     25% {
         transform: scale(0.9, 1.1);

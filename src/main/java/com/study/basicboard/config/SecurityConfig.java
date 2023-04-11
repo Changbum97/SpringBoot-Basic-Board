@@ -7,6 +7,7 @@ import com.study.basicboard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
@@ -22,7 +23,7 @@ public class SecurityConfig {
     private static final String[] anonymousUserUrl = {"/users/login", "/users/join"};
 
     // 로그인한 유저들만 접근 가능한 URL
-    private static final String[] authenticationUserUrl = {"/aa"};
+    private static final String[] authenticatedUserUrl = {"/aa"};
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
@@ -30,7 +31,8 @@ public class SecurityConfig {
                 .cors().and()
                 .authorizeRequests()
                 .antMatchers(anonymousUserUrl).anonymous()
-                .antMatchers(authenticationUserUrl).authenticated()
+                .antMatchers(authenticatedUserUrl).authenticated()
+                .antMatchers(HttpMethod.POST, "/boards/**/**").authenticated()
                 .antMatchers("/**").permitAll()
                 .and()
                 .exceptionHandling()
