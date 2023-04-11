@@ -28,7 +28,9 @@ public class UserController {
     public String join(@Valid @ModelAttribute UserJoinRequest req, BindingResult bindingResult, Model model) {
 
         // Validation
-        if (userService.joinValid(req, bindingResult).hasErrors()) return "users/join";
+        if (userService.joinValid(req, bindingResult).hasErrors()) {
+            return "users/join";
+        }
 
         userService.join(req);
         model.addAttribute("message", "회원가입에 성공했습니다!\n로그인 후 사용 가능합니다!");
