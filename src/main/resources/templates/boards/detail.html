@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/header.html :: head" />
+<body>
+<div th:replace="fragments/header.html :: header (${category})"/>
+<div class="row">
+    <div class="offset-2 col-8">
+        <!--<h5>글 개수 : [[${totalElements}]]</h5>-->
+        <table class="table list-table table-hover text-center">
+            <thead style="background-color: #A5F1E9">
+            <tr>
+                <th style="width: 15%">작성자</th>
+                <th style="width: 40%">제목</th>
+                <th style="width: 10%">조회수</th>
+                <th style="width: 10%">좋아요</th>
+                <th style="width: 10%">댓글</th>
+                <th style="width: 15%">작성일</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="board: ${boards}" th:onclick="|location.href='@{/boards/{boardId} (boardId=${board.id})}'|">
+                <td style="width: 15%" th:text="${board.user.nickname}"/>
+                <td style="width: 40%" th:text="${board.title}"/>
+                <!--<td style="width: 20%" th:text="${board.nickname}"/>-->
+                <td style="width: 10%" th:text="0"/>
+                <td style="width: 10%" th:text="0"/>
+                <td style="width: 10%" th:text="0"/>
+                <td style="width: 15%" th:text="${#temporals.format(board.createdAt, 'yy/MM/dd HH:mm')}"/>
+                <!--<td style="width: 7%" th:text="${board.likeCount}"/>
+                <td style="width: 7%" th:text="${board.commentCount}"/>-->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

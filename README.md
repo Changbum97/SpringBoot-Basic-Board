@@ -18,22 +18,24 @@
 - Spring Boot DevTools
 - Thymeleaf, Validation, thymeleaf-extras-springsecurity5
 
-## 기능, End Point
+## 기능 및 End Point
 
 ### 유저 기능
 
 - 회원가입 기능
-  - GET /users/join => 회원가입 페이지
-  - POST /users/join => 회원가입
-  - 아이디, 닉네임 중복 불가
-  - 비밀번호, 비밀번호 확인이 일치해야 가입 가능
+  - POST /users/join
+  - 아이디, 닉네임이 중복되거나 비밀번호, 비밀번호 확인이 일치하지 않으면 회원가입 불가
   - 비밀번호는 암호화해서 저장
-  - 회원가입 시 유저의 등급은 BRONZE로 설정
-  - 회원가입 성공시 성공 메세지 출력 후 로그인 화면으로 redirect
+  - 회원가입 시 신규 유저의 등급은 BRONZE로 설정
+- 회원가입 페이지
+  - GET /users/join
+  - 회원가입 성공 시 성공 메세지 출력 후 로그인 화면으로 redirect
   - 로그인 한 유저는 회원가입 페이지에 접근할 수 없음
 - 로그인 기능
-  - GET /users/login => 로그인 페이지
-  - POST /users/login => 로그인
+  - POST /users/login
+  - Spring Security에서 로그인 진행
+- 로그인 페이지
+  - GET /users/login
   - 아이디(loginId), 비밀번호로 로그인
   - 로그인 성공시 성공 메세지 출력 후 홈 화면으로 redirect
   - 로그인 한 유저는 로그인 페이지에 접근할 수 없음
