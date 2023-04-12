@@ -92,4 +92,9 @@ public class BoardService {
         boardRepository.deleteById(boardId);
         return boardId;
     }
+
+    public String getCategory(Long boardId) {
+        Board board = boardRepository.findById(boardId).get();
+        return board.getCategory().toString().toLowerCase();
+    }
 }

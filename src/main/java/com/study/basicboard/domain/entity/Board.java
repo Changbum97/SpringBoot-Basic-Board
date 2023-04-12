@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -29,6 +30,9 @@ public class Board extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;      // 작성자
+
+    @OneToMany(mappedBy = "board")
+    private List<Like> likes;       // 좋아요
 
     public void update(BoardDto dto) {
         this.title = dto.getTitle();

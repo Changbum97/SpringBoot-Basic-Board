@@ -4,32 +4,61 @@
 <body>
 <div th:replace="fragments/header.html :: header (${category})"/>
 <div class="row">
-    <form class="offset-3 col-6 form-group" th:object="${boardDto}" th:method="post"
-          th:action="|@{/boards/{category}/{boardId}/edit (category = ${category}, boardId=${boardDto.id})}|">
-        <div>
-            <label th:for="title">제목 : </label>
-            <input type="text" th:field="*{title}" readonly>
+    <div class="offset-3 col-6">
+        <form class="form-group" th:object="${boardDto}" th:method="post"
+              th:action="|@{/boards/{category}/{boardId}/edit (category = ${category}, boardId=${boardDto.id})}|">
+            <div style="float: right;" align="right">
+                <div th:text="'작성일 : ' + ${#temporals.format(boardDto.createdAt, 'yy/MM/dd HH:mm')}"></div>
+                <div th:text="'최근 수정일 : ' + ${#temporals.format(boardDto.lastModifiedAt, 'yy/MM/dd HH:mm')}"></div>
+                <br/>
+                <div sec:authorize="isAuthenticated()">
+                    <div th:if="${likeCheck == false}" style="font-size: large">
+                        <button class="btn icon-btn" type="button"
+                                th:onclick="|location.href='@{/likes/add/{boardId} (boardId=${boardDto.id})}'|">
+                            <img class="small-img" src="/images/empty-hearts.svg">
+                        </button>[[${boardDto.likeCnt}]]
+                    </div>
+                    <div th:unless="${likeCheck == false}" style="font-size: large">
+                        <button class="btn icon-btn" type="button"
+                                onclick="deleteLike()">
+                            <img class="small-img" src="/images/fill-hearts.svg">
+                        </button>[[${boardDto.likeCnt}]]
+                    </div>
+                </div>
+                <div sec:authorize="isAnonymous()">
+                    <div style="font-size: large">
+                        <button class="btn icon-btn" type="button"
+                                onclick="askLogin()">
+                            <img class="small-img" src="/images/empty-hearts.svg">
+                        </button>[[${boardDto.likeCnt}]]
+                    </div>
+                </div>
+            </div>
+            <div>
+                <label th:for="title" style="font-size: large">제목 : </label>
+                <input type="text" th:field="*{title}" readonly>
+            </div>
+            <br/>
+            <div th:text="'작성자 : ' + *{userNickname}" style="font-size: large"></div>
+            <br/>
+            <div>
+                <label th:for="body" style="font-size: large">내용 : </label>
+                <textarea rows="10" style="width: 100%;" th:field="*{body}" readonly/>
+            </div>
+            <br/>
+            <div id="div2" align="center" hidden>
+                <button class="btn edit-btn" type="submit">수정 완료</button>
+            </div>
+        </form>
+        <div id="div1" th:if="${loginUserLoginId == boardDto.userLoginId}" align="center">
+            <button class="btn edit-btn" onclick="clickEdit()">수정</button>
+            <button class="btn del-btn" onclick="clickDelete()">삭제</button>
         </div>
-        <br/>
-        <div th:text="'작성자 : ' + *{userNickname}"></div>
-        <br/>
-        <div th:text="'작성일 : ' + ${#temporals.format(boardDto.createdAt, 'yy/MM/dd HH:mm')}"></div>
-        <br/>
-        <div>
-            <label th:for="body">내용 : </label>
-            <textarea rows="10" style="width: 100%;" th:field="*{body}" readonly/>
+        <div th:unless="${loginUserLoginId == boardDto.userLoginId}" sec:authorize="hasAuthority('ADMIN')" align="center">
+            <button class="btn del-btn" onclick="clickDelete()">삭제</button>
         </div>
-        <br/>
-        <div id="div2" align="center" hidden>
-            <button class="btn edit-btn" type="submit">수정 완료</button>
-        </div>
-    </form>
-    <div id="div1" th:if="${loginUserLoginId == boardDto.userLoginId}" align="center">
-        <button class="btn edit-btn" onclick="clickEdit()">수정</button>
-        <button class="btn del-btn" onclick="clickDelete()">삭제</button>
-    </div>
-    <div th:unless="${loginUserLoginId == boardDto.userLoginId}" sec:authorize="hasAuthority('ADMIN')" align="center">
-        <button class="btn del-btn" onclick="clickDelete()">삭제</button>
+        <br/><hr/>
+
     </div>
 </div>
 
@@ -43,6 +72,16 @@
     function clickDelete() {
         if (confirm("해당 글을 삭제 하시겠습니까?") == true) {
             location.href = "/boards/" + [[${category}]] + "/" + [[${boardDto.id}]] + "/delete";
+        }
+    }
+    function deleteLike() {
+        if (confirm("좋아요를 취소 하시겠습니까?") == true) {
+            location.href = "/likes/delete/" + [[${boardDto.id}]];
+        }
+    }
+    function askLogin() {
+        if (confirm("로그인이 필요한 작업입니다.\n로그인 하시겠습니까?") == true) {
+            location.href = "/users/login";
         }
     }
 </script>

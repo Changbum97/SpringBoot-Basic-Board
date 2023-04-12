@@ -26,6 +26,16 @@
     animation: jelly 0.5s;
 }
 
+.icon-btn{
+    background-color: unset;
+    border: none;
+}
+
+.icon-btn:hover, .icon-btn:focus, .icon-btn:active:focus {
+    border: none;
+    animation: jelly 0.5s;
+}
+
 .user-btn {
     background-color: lime;
     font-weight: bold;
@@ -119,4 +129,9 @@
 
 .nav-link.active {
     font-weight: bold;
+}
+
+.small-img {
+    width: 30px;
+    height: 30px;
 }

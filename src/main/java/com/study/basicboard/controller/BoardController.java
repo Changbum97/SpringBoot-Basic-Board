@@ -3,16 +3,13 @@ package com.study.basicboard.controller;
 import com.study.basicboard.domain.dto.BoardCreateRequest;
 import com.study.basicboard.domain.dto.BoardDto;
 import com.study.basicboard.domain.dto.BoardSearchRequest;
-import com.study.basicboard.domain.entity.Board;
 import com.study.basicboard.domain.enum_class.BoardCategory;
 import com.study.basicboard.service.BoardService;
+import com.study.basicboard.service.LikeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class BoardController {
 
     private final BoardService boardService;
+    private final LikeService likeService;
 
     @GetMapping("/{category}")
     public String boardListPage(@PathVariable String category, Model model,
@@ -82,6 +80,8 @@ public class BoardController {
                                   Authentication auth) {
         if (auth != null) {
             model.addAttribute("loginUserLoginId", auth.getName());
+            System.out.println(likeService.checkLike(auth.getName(), boardId));
+            model.addAttribute("likeCheck", likeService.checkLike(auth.getName(), boardId));
         }
 
         BoardDto boardDto = boardService.getBoard(boardId, category);

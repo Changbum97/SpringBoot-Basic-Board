@@ -15,6 +15,7 @@ public class BoardDto {
     private String userNickname;
     private String title;
     private String body;
+    private Integer likeCnt;
     private LocalDateTime createdAt;
     private LocalDateTime lastModifiedAt;
 
@@ -27,6 +28,7 @@ public class BoardDto {
                 .body(board.getBody())
                 .createdAt(board.getCreatedAt())
                 .lastModifiedAt(board.getLastModifiedAt())
+                .likeCnt(board.getLikes().size())
                 .build();
     }
 }
