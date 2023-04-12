@@ -1,6 +1,7 @@
 package com.study.basicboard.config;
 
 import com.study.basicboard.config.auth.MyAccessDeniedHandler;
+import com.study.basicboard.config.auth.MyAuthenticationEntryPoint;
 import com.study.basicboard.config.auth.MyLoginSuccessHandler;
 import com.study.basicboard.config.auth.MyLogoutSuccessHandler;
 import com.study.basicboard.repository.UserRepository;
@@ -23,7 +24,7 @@ public class SecurityConfig {
     private static final String[] anonymousUserUrl = {"/users/login", "/users/join"};
 
     // 로그인한 유저들만 접근 가능한 URL
-    private static final String[] authenticatedUserUrl = {"/aa"};
+    private static final String[] authenticatedUserUrl = {"/boards/**/**/delete"};
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
@@ -37,6 +38,7 @@ public class SecurityConfig {
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(new MyAccessDeniedHandler())
+                .authenticationEntryPoint(new MyAuthenticationEntryPoint())
                 .and()
                 // 폼 로그인
                 .formLogin()

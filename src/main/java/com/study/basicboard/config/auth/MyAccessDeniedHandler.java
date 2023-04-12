@@ -16,7 +16,6 @@ public class MyAccessDeniedHandler implements AccessDeniedHandler {
 
         // 로그인한 유저가 login, join을 시도한 경우
         if (requestURI.contains("/users/login") || requestURI.contains("/users/join")) {
-
             // 메세지 출력 후 홈으로 redirect
             response.setContentType("text/html");
             PrintWriter pw = response.getWriter();

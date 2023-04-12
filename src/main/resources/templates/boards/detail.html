@@ -26,7 +26,12 @@
     </form>
     <div id="div1" th:if="${loginUserLoginId == boardDto.userLoginId}" align="center">
         <button class="btn post-btn" onclick="clickEdit()">수정</button>
-        <button class="btn del-btn" onclick="clickDelete()">삭제</button>
+        <button class="btn del-btn" th:onclick="|location.href = '@{/boards/{category}/{boardId}/delete (category=${category}, boardId=${boardDto.id})}'|">
+            삭제</button>
+    </div>
+    <div th:unless="${loginUserLoginId == boardDto.userLoginId}" sec:authorize="hasAuthority('ADMIN')" align="center">
+        <button class="btn del-btn" th:onclick="|location.href = '@{/boards/{category}/{boardId}/delete (category=${category}, boardId=${boardDto.id})}'|">
+            삭제</button>
     </div>
 </div>
 
@@ -36,9 +41,6 @@
         document.getElementById("div2").removeAttribute("hidden");
         document.getElementById("title").removeAttribute("readonly");
         document.getElementById("body").removeAttribute("readonly");
-    }
-    function clickDelete() {
-        alert("삭제")
     }
 </script>
 </body>
