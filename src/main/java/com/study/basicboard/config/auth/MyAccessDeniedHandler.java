@@ -30,5 +30,13 @@ public class MyAccessDeniedHandler implements AccessDeniedHandler {
             pw.println("<script>alert('골드 등급 이상의 유저만 접근 가능합니다!'); location.href='/';</script>");
             pw.flush();
         }
+        // BRONZE 등급이 자유게시판에 글을 작성하려는 경우
+        else if (requestURI.contains("free/write")) {
+            // 메세지 출력 후 홈으로 redirect
+            response.setContentType("text/html");
+            PrintWriter pw = response.getWriter();
+            pw.println("<script>alert('가입인사 작성 후 작성 가능합니다!'); location.href='/boards/greeting';</script>");
+            pw.flush();
+        }
     }
 }

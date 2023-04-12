@@ -24,7 +24,7 @@ public class SecurityConfig {
     private static final String[] anonymousUserUrl = {"/users/login", "/users/join"};
 
     // 로그인한 유저들만 접근 가능한 URL
-    private static final String[] authenticatedUserUrl = {"/boards/**/write", "/boards/**/**/edit", "/boards/**/**/delete"};
+    private static final String[] authenticatedUserUrl = {"/boards/greeting/write", "/boards/**/**/edit", "/boards/**/**/delete"};
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
@@ -33,6 +33,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers(anonymousUserUrl).anonymous()
                 .antMatchers(authenticatedUserUrl).authenticated()
+                .antMatchers("/boards/free/write").hasAnyAuthority("SILVER", "GOLD", "ADMIN")
                 .antMatchers("/boards/gold/**").hasAnyAuthority("GOLD", "ADMIN")
                 .anyRequest().permitAll()
                 .and()

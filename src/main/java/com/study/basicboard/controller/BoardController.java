@@ -57,8 +57,12 @@ public class BoardController {
             return "printMessage";
         }
 
-        Long savedBoardId = boardService.writeBoard(req, boardCategory, auth.getName());
-        model.addAttribute("message", savedBoardId + "번 글이 등록되었습니다.");
+        Long savedBoardId = boardService.writeBoard(req, boardCategory, auth.getName(), auth);
+        if (boardCategory.equals(BoardCategory.GREETING)) {
+            model.addAttribute("message", "가입인사를 작성하여 SILVER 등급으로 승급했습니다!\n이제 자유게시판에 글을 작성할 수 있습니다!");
+        } else {
+            model.addAttribute("message", savedBoardId + "번 글이 등록되었습니다.");
+        }
         model.addAttribute("nextUrl", "/boards/" + category + "/" + savedBoardId);
         return "printMessage";
     }
