@@ -2,10 +2,12 @@ package com.study.basicboard.controller;
 
 import com.study.basicboard.domain.dto.BoardCreateRequest;
 import com.study.basicboard.domain.dto.BoardDto;
+import com.study.basicboard.domain.dto.BoardSearchRequest;
 import com.study.basicboard.domain.entity.Board;
 import com.study.basicboard.domain.enum_class.BoardCategory;
 import com.study.basicboard.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -24,7 +26,9 @@ public class BoardController {
 
     @GetMapping("/{category}")
     public String boardListPage(@PathVariable String category, Model model,
-                                @RequestParam(required = false, defaultValue = "1") int page) {
+                                @RequestParam(required = false, defaultValue = "1") int page,
+                                @RequestParam(required = false) String searchType,
+                                @RequestParam(required = false) String keyword) {
         BoardCategory boardCategory = BoardCategory.of(category);
         if (boardCategory == null) {
             model.addAttribute("message", "카테고리가 존재하지 않습니다.");
@@ -33,9 +37,9 @@ public class BoardController {
         }
 
         PageRequest pageRequest = PageRequest.of(page - 1, 10, Sort.by("id").descending());
-
         model.addAttribute("category", category);
-        model.addAttribute("boards", boardService.getBoardList(boardCategory, pageRequest));
+        model.addAttribute("boards", boardService.getBoardList(boardCategory, pageRequest, searchType, keyword));
+        model.addAttribute("boardSearchRequest", new BoardSearchRequest(searchType, keyword));
         return "boards/list";
     }
 

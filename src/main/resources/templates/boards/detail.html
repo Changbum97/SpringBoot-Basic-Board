@@ -3,7 +3,7 @@
 <head th:replace="fragments/header.html :: head" />
 <body>
 <div th:replace="fragments/header.html :: header (${category})"/>
-<div class="row" style="margin-top: 60px;">
+<div class="row">
     <form class="offset-3 col-6 form-group" th:object="${boardDto}" th:method="post"
           th:action="|@{/boards/{category}/{boardId}/edit (category = ${category}, boardId=${boardDto.id})}|">
         <div>

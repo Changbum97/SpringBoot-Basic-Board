@@ -3,7 +3,7 @@
 <head th:replace="fragments/header.html :: head" />
 <body>
 <div th:replace="fragments/header.html :: header ('join')"/>
-<div class="row" style="margin-top: 60px;">
+<div class="row">
     <form class="offset-4 col-4 form-group user-form" th:method="post" th:action="@{/users/join}" th:object="${userJoinRequest}" align="left">
         <div>
             <label th:for="loginId">아이디</label><br/>

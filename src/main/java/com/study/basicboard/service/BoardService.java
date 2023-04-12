@@ -33,7 +33,14 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
 
-    public Page<Board> getBoardList(BoardCategory category, PageRequest pageRequest) {
+    public Page<Board> getBoardList(BoardCategory category, PageRequest pageRequest, String searchType, String keyword) {
+        if (searchType != null && keyword != null) {
+            if (searchType.equals("title")) {
+                return boardRepository.findAllByCategoryAndTitleContains(category, keyword, pageRequest);
+            } else {
+                return boardRepository.findAllByCategoryAndUserNicknameContains(category, keyword, pageRequest);
+            }
+        }
         return boardRepository.findAllByCategory(category, pageRequest);
     }
 

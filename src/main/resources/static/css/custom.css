@@ -13,6 +13,19 @@
     animation: jelly 0.5s;
 }
 
+.search-btn {
+    background-color: lightcyan;
+    font-weight: bold;
+    border: none;
+    height: 40px;
+    width: 100px;
+}
+
+.search-btn:hover, .search-btn:focus, .search-btn:active:focus {
+    background-color: cyan;
+    animation: jelly 0.5s;
+}
+
 .user-btn {
     background-color: lime;
     font-weight: bold;

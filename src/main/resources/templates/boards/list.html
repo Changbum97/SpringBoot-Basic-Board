@@ -3,15 +3,28 @@
 <head th:replace="fragments/header.html :: head" />
 <body>
 <div th:replace="fragments/header.html :: header (${category})"/>
-<div class="row" style="margin-top: 20px; margin-bottom: 20px">
-    <div class="offset-2 col-8" align="right">
+<div class="row" style=" margin-bottom: 30px">
+    <div class="offset-2 col-1">
+        <h5 style="height: 40px; display: flex; align-items: center; margin: 0px">전체: [[${boards.getTotalElements()}]]개</h5>
+    </div>
+    <div class="col-6" align="center">
+        <form class="form-group" style="height: 40px;" th:object="${boardSearchRequest}" th:method="get"
+              th:action="|@{/boards/{category} (category=${category}, searchType=*{searchType}, keyword=*{keyword})}|">
+            <select th:field="*{searchType}" style="height: 40px;">
+                <option th:value="title">제목</option>
+                <option th:value="nickname">작성자</option>
+            </select>
+            <input type="text" th:field="*{keyword}" placeholder="검색 키워드를 입력해주세요" style="height: 100%; width: 60%;">
+            <button class="btn search-btn" type="submit">검색</button>
+        </form>
+    </div>
+    <div class="col-1" align="right">
         <button class="btn post-btn" type="button"
                 th:onclick="|location.href='@{/boards/{category}/write (category=${category})}'|">글 작성</button>
     </div>
 </div>
 <div class="row">
     <div class="offset-2 col-8">
-        <!--<h5>글 개수 : [[${totalElements}]]</h5>-->
         <table class="table list-table table-hover text-center">
             <thead style="background-color: #A5F1E9">
             <tr>
@@ -37,13 +50,8 @@
             </tbody>
         </table>
     </div>
+
     <ul id="paging-ul" class="pagination justify-content-center">
-        <li><a class="page-link" href="/">&laquo;</a></li>
-        <li><a class="page-link" href="/">&lsaquo;</a></li>
-        <li class='page-item active'><a class= 'page-link'>1</a></li>
-        <li class='page-item'><a class= 'page-link'>2</a></li>
-        <li><a class="page-link" href="/">&rsaquo;</a></li>
-        <li><a class="page-link" href="/">&raquo;</a></li>
     </ul>
 </div>
 <script th:inline="javascript">
@@ -96,7 +104,13 @@
         let category = [[${category}]];
         let url = "/boards/" + category + "?page=" + page;
 
-        // 검색 햇으면 다음 URL에도 추가
+        // 검색 했으면 다음 URL에도 추가
+        let searchType = [[${boardSearchRequest.searchType}]];
+        let keyword = [[${boardSearchRequest.keyword}]];
+
+        if (searchType != null) {
+            url += "&searchType=" + searchType + "&keyword=" + keyword;
+        }
 
         return url;
     }
