@@ -6,6 +6,9 @@ import com.study.basicboard.domain.entity.Board;
 import com.study.basicboard.domain.enum_class.BoardCategory;
 import com.study.basicboard.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
@@ -20,7 +23,8 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/{category}")
-    public String boardListPage(@PathVariable String category, Model model) {
+    public String boardListPage(@PathVariable String category, Model model,
+                                @RequestParam(required = false, defaultValue = "1") int page) {
         BoardCategory boardCategory = BoardCategory.of(category);
         if (boardCategory == null) {
             model.addAttribute("message", "카테고리가 존재하지 않습니다.");
@@ -28,8 +32,10 @@ public class BoardController {
             return "printMessage";
         }
 
+        PageRequest pageRequest = PageRequest.of(page - 1, 10, Sort.by("id").descending());
+
         model.addAttribute("category", category);
-        model.addAttribute("boards", boardService.getBoardList(boardCategory));
+        model.addAttribute("boards", boardService.getBoardList(boardCategory, pageRequest));
         return "boards/list";
     }
 

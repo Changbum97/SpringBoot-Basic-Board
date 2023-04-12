@@ -43,12 +43,21 @@ public class MakeInitData {
 
         userRepository.save(user);
 
-        for (int i = 1 ; i <= 10 ; i ++) {
+        for (int i = 1 ; i <= 101 ; i ++) {
             boardRepository.save(Board.builder()
                     .title("제목" + i)
                     .body("내용" + i + i + i)
                     .category(BoardCategory.FREE)
                     .user(user)
+                    .build());
+        }
+
+        for (int i = 1 ; i <= 12 ; i ++) {
+            boardRepository.save(Board.builder()
+                    .title("title" + i)
+                    .body("내용" + i + i + i)
+                    .category(BoardCategory.FREE)
+                    .user(admin)
                     .build());
         }
     }
