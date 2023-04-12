@@ -4,8 +4,8 @@
 <body>
 <div th:replace="fragments/header.html :: header (${category})"/>
 <div class="row" style=" margin-bottom: 30px">
-    <div class="offset-2 col-1">
-        <h5 style="height: 40px; display: flex; align-items: center; margin: 0px">전체: [[${boards.getTotalElements()}]]개</h5>
+    <div class="offset-1 col-2">
+        <h5 style="height: 40px; display: flex; align-items: center; margin: 0px; justify-content: right">전체: [[${boards.getTotalElements()}]]개</h5>
     </div>
     <div class="col-6" align="center">
         <form class="form-group" style="height: 40px;" th:object="${boardSearchRequest}" th:method="get"
