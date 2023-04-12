@@ -22,5 +22,13 @@ public class MyAccessDeniedHandler implements AccessDeniedHandler {
             pw.println("<script>alert('이미 로그인 되어있습니다!'); location.href='/';</script>");
             pw.flush();
         }
+        // 골드게시판은 GOLD, ADMIN만 접근 가능
+        else if (requestURI.contains("gold")) {
+            // 메세지 출력 후 홈으로 redirect
+            response.setContentType("text/html");
+            PrintWriter pw = response.getWriter();
+            pw.println("<script>alert('골드 등급 이상의 유저만 접근 가능합니다!'); location.href='/';</script>");
+            pw.flush();
+        }
     }
 }

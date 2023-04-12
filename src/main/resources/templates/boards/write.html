@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/header.html :: head" />
+<body>
+<div th:replace="fragments/header.html :: header (${category})"/>
+<div class="row" style="margin-top: 60px;">
+    <form class="offset-3 col-6 form-group" th:object="${boardCreateRequest}" th:method="post"
+          th:action="|@{/boards/{category} (category = ${category})}|">
+        <div>
+            <label th:for="title">제목 : </label>
+            <input type="text" th:field="*{title}">
+        </div>
+        <br/>
+        <div>
+            <label th:for="body">내용 : </label>
+            <textarea rows="10" style="width: 100%;" th:field="*{body}"/>
+        </div>
+        <br/>
+        <div align="center">
+            <button class="btn post-btn" type="submit">등록</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

@@ -3,6 +3,12 @@
 <head th:replace="fragments/header.html :: head" />
 <body>
 <div th:replace="fragments/header.html :: header (${category})"/>
+<div class="row" style="margin-top: 20px; margin-bottom: 20px">
+    <div class="offset-2 col-8" align="right">
+        <button class="btn post-btn" type="button"
+                th:onclick="|location.href='@{/boards/{category}/write (category=${category})}'|">글 작성</button>
+    </div>
+</div>
 <div class="row">
     <div class="offset-2 col-8">
         <!--<h5>글 개수 : [[${totalElements}]]</h5>-->

@@ -3,7 +3,7 @@
 <head th:replace="fragments/header.html :: head" />
 <body>
 <div th:replace="fragments/header.html :: header (${category})"/>
-<div class="row">
+<div class="row" style="margin-top: 60px;">
     <form class="offset-3 col-6 form-group" th:object="${boardDto}" th:method="post"
           th:action="|@{/boards/{category}/{boardId}/edit (category = ${category}, boardId=${boardDto.id})}|">
         <div>
@@ -21,11 +21,11 @@
         </div>
         <br/>
         <div id="div2" align="center" hidden>
-            <button class="btn post-btn" type="submit">수정 완료</button>
+            <button class="btn edit-btn" type="submit">수정 완료</button>
         </div>
     </form>
     <div id="div1" th:if="${loginUserLoginId == boardDto.userLoginId}" align="center">
-        <button class="btn post-btn" onclick="clickEdit()">수정</button>
+        <button class="btn edit-btn" onclick="clickEdit()">수정</button>
         <button class="btn del-btn" onclick="clickDelete()">삭제</button>
     </div>
     <div th:unless="${loginUserLoginId == boardDto.userLoginId}" sec:authorize="hasAuthority('ADMIN')" align="center">

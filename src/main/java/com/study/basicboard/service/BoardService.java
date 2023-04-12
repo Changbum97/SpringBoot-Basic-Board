@@ -1,9 +1,12 @@
 package com.study.basicboard.service;
 
+import com.study.basicboard.domain.dto.BoardCreateRequest;
 import com.study.basicboard.domain.dto.BoardDto;
 import com.study.basicboard.domain.entity.Board;
+import com.study.basicboard.domain.entity.User;
 import com.study.basicboard.domain.enum_class.BoardCategory;
 import com.study.basicboard.repository.BoardRepository;
+import com.study.basicboard.repository.UserRepository;
 import jdk.jfr.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,7 @@ import java.util.Optional;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final UserRepository userRepository;
 
     public List<Board> getBoardList(BoardCategory category) {
         return boardRepository.findAllByCategory(category);
@@ -31,6 +35,13 @@ public class BoardService {
         }
 
         return BoardDto.of(optBoard.get());
+    }
+
+    public Long writeBoard(BoardCreateRequest req, BoardCategory category, String loginId) {
+        User loginUser = userRepository.findByLoginId(loginId).get();
+
+        Board savedBoard = boardRepository.save(req.toEntity(category, loginUser));
+        return savedBoard.getId();
     }
 
     @Transactional

@@ -27,7 +27,7 @@
 }
 
 .post-btn {
-    background-color: lime;
+    background-color: lightgoldenrodyellow;
     font-weight: bold;
     border: none;
     height: 40px;
@@ -35,6 +35,19 @@
 }
 
 .post-btn:hover, .post-btn:focus, .post-btn:active:focus {
+    background-color: yellow;
+    animation: jelly 0.5s;
+}
+
+.edit-btn {
+    background-color: lime;
+    font-weight: bold;
+    border: none;
+    height: 40px;
+    width: 100px;
+}
+
+.edit-btn:hover, .edit-btn:focus, .edit-btn:active:focus {
     background-color: limegreen;
     animation: jelly 0.5s;
 }
