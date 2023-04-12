@@ -1,6 +1,7 @@
 package com.study.basicboard.domain.entity;
 
 import com.study.basicboard.domain.BaseEntity;
+import com.study.basicboard.domain.dto.BoardDto;
 import com.study.basicboard.domain.enum_class.BoardCategory;
 import com.study.basicboard.domain.enum_class.UserRole;
 import lombok.AllArgsConstructor;
@@ -28,4 +29,9 @@ public class Board extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;      // 작성자
+
+    public void update(BoardDto dto) {
+        this.title = dto.getTitle();
+        this.body = dto.getBody();
+    }
 }

@@ -37,8 +37,8 @@ public class SecurityConfig {
                 .antMatchers("/**").permitAll()
                 .and()
                 .exceptionHandling()
-                .accessDeniedHandler(new MyAccessDeniedHandler())
-                .authenticationEntryPoint(new MyAuthenticationEntryPoint())
+                .accessDeniedHandler(new MyAccessDeniedHandler())           // 인가 실패
+                .authenticationEntryPoint(new MyAuthenticationEntryPoint()) // 인증 실패
                 .and()
                 // 폼 로그인
                 .formLogin()

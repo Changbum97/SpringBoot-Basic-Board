@@ -8,6 +8,7 @@ import jdk.jfr.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +31,21 @@ public class BoardService {
         }
 
         return BoardDto.of(optBoard.get());
+    }
+
+    @Transactional
+    public Long editBoard(Long boardId, String category, BoardDto dto) {
+        Optional<Board> optBoard = boardRepository.findById(boardId);
+
+        // id에 해당하는 게시글이 없거나 카테고리가 일치하지 않으면 null return
+        if (optBoard.isEmpty() || !optBoard.get().getCategory().toString().equalsIgnoreCase(category)) {
+            return null;
+        }
+
+        Board board = optBoard.get();
+        board.update(dto);
+
+        return board.getId();
     }
 
     public Long deleteBoard(Long boardId, String category) {

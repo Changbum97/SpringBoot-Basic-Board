@@ -9,10 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/boards")
@@ -55,10 +52,20 @@ public class BoardController {
         return "boards/detail";
     }
 
-    /*@PostMapping("/{category}/{boardId}")
-    public String boardEdit(@PathVariable String category, ) {
+    @PostMapping("/{category}/{boardId}/edit")
+    public String boardEdit(@PathVariable String category, @PathVariable Long boardId,
+                            @ModelAttribute BoardDto dto, Model model) {
+        Long editedBoardId = boardService.editBoard(boardId, category, dto);
 
-    }*/
+        if (editedBoardId == null) {
+            model.addAttribute("message", "해당 게시글이 존재하지 않습니다.");
+            model.addAttribute("nextUrl", "/boards/" + category);
+        } else {
+            model.addAttribute("message", editedBoardId + "번 글이 수정되었습니다.");
+            model.addAttribute("nextUrl", "/boards/" + category + "/" + boardId);
+        }
+        return "printMessage";
+    }
 
     @GetMapping("/{category}/{boardId}/delete")
     public String boardDelete(@PathVariable String category, @PathVariable Long boardId, Model model) {
@@ -70,4 +77,5 @@ public class BoardController {
         model.addAttribute("nextUrl", "/boards/" + category);
         return "printMessage";
     }
+
 }
