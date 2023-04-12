@@ -38,5 +38,13 @@ public class MyAccessDeniedHandler implements AccessDeniedHandler {
             pw.println("<script>alert('가입인사 작성 후 작성 가능합니다!'); location.href='/boards/greeting';</script>");
             pw.flush();
         }
+        // SILVER 등급 이상이 가입인사를 작성하려는 경우
+        else if (requestURI.contains("greeting")) {
+            // 메세지 출력 후 홈으로 redirect
+            response.setContentType("text/html");
+            PrintWriter pw = response.getWriter();
+            pw.println("<script>alert('가입인사는 한 번만 작성 가능합니다!'); location.href='/boards/greeting';</script>");
+            pw.flush();
+        }
     }
 }
