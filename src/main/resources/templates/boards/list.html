@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header.html :: head" />
 <body>
 <div th:replace="fragments/header.html :: header (${category})"/>
@@ -52,9 +52,7 @@
             </tbody>
         </table>
     </div>
-
-    <ul id="paging-ul" class="pagination justify-content-center">
-    </ul>
+    <ul id="paging-ul" class="pagination justify-content-center"></ul>
 </div>
 <script th:inline="javascript">
     window.onload = function () {

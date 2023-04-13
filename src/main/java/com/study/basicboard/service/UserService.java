@@ -6,6 +6,8 @@ import com.study.basicboard.domain.dto.UserLoginRequest;
 import com.study.basicboard.domain.entity.User;
 import com.study.basicboard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -92,5 +94,9 @@ public class UserService {
         } else {
             loginUser.edit(encoder.encode(dto.getNewPassword()), dto.getNickname());
         }
+    }
+
+    public Page<User> findAllByNickname(String keyword, PageRequest pageRequest) {
+        return userRepository.findAllByNicknameContains(keyword, pageRequest);
     }
 }

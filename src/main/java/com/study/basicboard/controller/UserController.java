@@ -7,6 +7,10 @@ import com.study.basicboard.domain.entity.User;
 import com.study.basicboard.service.BoardService;
 import com.study.basicboard.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -78,5 +82,18 @@ public class UserController {
         model.addAttribute("message", "정보가 수정되었습니다.");
         model.addAttribute("nextUrl", "/users/myPage/board");
         return "printMessage";
+    }
+
+    @GetMapping("/admin")
+    public String adminPage(@RequestParam(required = false, defaultValue = "1") int page,
+                            @RequestParam(required = false, defaultValue = "") String keyword,
+                            Model model) {
+
+        PageRequest pageRequest = PageRequest.of(page - 1, 10, Sort.by("id").descending());
+        Page<User> users = userService.findAllByNickname(keyword, pageRequest);
+
+        model.addAttribute("users", users);
+        model.addAttribute("keyword", keyword);
+        return "users/admin";
     }
 }

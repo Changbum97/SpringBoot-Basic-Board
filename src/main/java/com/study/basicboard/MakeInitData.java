@@ -46,6 +46,17 @@ public class MakeInitData {
 
         userRepository.save(user);
 
+        for (int i = 1 ; i <= 60 ; i ++) {
+            userRepository.save(User.builder()
+                    .loginId("user" + i)
+                    .password(encoder.encode("1234"))
+                    .createdAt(LocalDateTime.now())
+                    .nickname("유저" + i)
+                    .receivedLikeCnt(0)
+                    .userRole(UserRole.BRONZE)
+                    .build());
+        }
+
         Random random = new Random();
 
         for (int i = 1 ; i <= 101 ; i ++) {

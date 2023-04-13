@@ -46,5 +46,14 @@ public class MyAccessDeniedHandler implements AccessDeniedHandler {
             pw.println("<script>alert('가입인사는 한 번만 작성 가능합니다!'); location.href='/boards/greeting';</script>");
             pw.flush();
         }
+        // ADMIN이 아닌데 관리자 페이지에 접속한 경우
+        else if (requestURI.contains("admin")) {
+            // 메세지 출력 후 홈으로 redirect
+            response.setContentType("text/html");
+            PrintWriter pw = response.getWriter();
+            pw.println("<script>alert('관리자만 접속 가능합니다!'); location.href='/';</script>");
+            pw.flush();
+
+        }
     }
 }

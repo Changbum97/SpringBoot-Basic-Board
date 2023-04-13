@@ -60,7 +60,7 @@
                 <!-- 로그인 했을때 -->
                 <ul class="navbar-nav" sec:authorize="isAuthenticated()">
                     <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
-                        <button class="btn nav-btn" onclick="location.href = '/admin'">관리자 페이지</button>
+                        <button class="btn nav-btn" onclick="location.href = '/users/admin'" style="width: fit-content">관리자 페이지</button>
                     </li>
                     <li class="nav-item">
                         <button class="btn nav-btn" onclick="location.href = '/users/myPage/board'">마이페이지</button>

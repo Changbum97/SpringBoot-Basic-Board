@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header.html :: head" />
+<body>
+<div th:replace="fragments/header.html :: header ('admin')"/>
+<div class="row">
+    <div class="offset-1 col-10">
+        <form class="form-group" align="center" style="height: 40px;" th:method="get"
+              th:action="|@{/users/admin (keyword=${keyword})}|">
+            <input type="text" name="keyword" th:value="${keyword}" placeholder="닉네임을 입력해주세요" style="height: 100%; width: 30%;">
+            <button class="btn search-btn" type="submit">검색</button>
+        </form>
+        <br/><br/>
+        <table class="table list-table table-hover text-center">
+            <thead style="background-color: #A5F1E9">
+            <tr>
+                <th style="width: 15%">아이디</th>
+                <th style="width: 15%">닉네임</th>
+                <th style="width: 15%">등급</th>
+                <th style="width: 15%">가입일</th>
+                <th style="width: 10%">작성 글 수</th>
+                <th style="width: 10%">작성 댓글 수</th>
+                <th style="width: 10%">누른 좋아요 수</th>
+                <th style="width: 10%">받은 좋아요 수</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user: ${users}">
+                <th style="width: 15%" th:text="${user.loginId}"/>
+                <th style="width: 15%" th:text="${user.nickname}"/>
+                <th style="width: 15%" th:text="${user.userRole}"/>
+                <th style="width: 15%" th:text="${#temporals.format(user.createdAt, 'yy/MM/dd HH:mm')}"/>
+                <th style="width: 10%" th:text="${user.boards.size}"/>
+                <th style="width: 10%" th:text="${user.comments.size}"/>
+                <th style="width: 10%" th:text="${user.likes.size}"/>
+                <th style="width: 10%" th:text="${user.receivedLikeCnt}"/>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <ul id="paging-ul" class="pagination justify-content-center"></ul>
+</div>
+<script th:inline="javascript">
+    window.onload = function () {
+        let nowPage = [[${users.getNumber()}]] + 1;    // 현재 페이지
+        let totalPage = [[${users.getTotalPages()}]];  // 전체 페이지 수
+
+        let firstPage;  // 화면에 출력될 첫 페이지
+        for (let i = nowPage ; i >= 1 ; i --) {
+            if(i % 5 == 1) {
+                firstPage = i;
+                break;
+            }
+        }
+
+        let lastPage;   // 화면에 출력될 마지막 페이지
+        let nextButton; // 다음 버튼 출력 여부
+        if (firstPage + 4 >= totalPage) {
+            lastPage = totalPage;
+            nextButton = false;
+        } else {
+            lastPage = firstPage + 4;
+            nextButton = true;
+        }
+
+        // HTML 생성
+        let pageHtml = "";
+        pageHtml += "<li><a class='page-link' href='" + makeUrl(1) +  "'>&laquo;</a></li>";
+        if (firstPage != 1) {
+            pageHtml += "<li><a class='page-link' href='" + makeUrl(firstPage - 1) +  "'>&lsaquo;</a></li>";
+        }
+
+        for (let i = firstPage; i <= lastPage; i++) {
+            if (i == nowPage) {
+                pageHtml += "<li class='page-item active'><a class= 'page-link'>" + i + "</a></li>";
+            } else {
+                pageHtml += "<li class='page-item'><a class= 'page-link' href='" + makeUrl(i) + "'>" + i + "</a></li>";
+            }
+        }
+
+        if (nextButton) {
+            pageHtml += "<li><a class='page-link' href='" + makeUrl(lastPage + 1) +  "'>&rsaquo;</a></li>";
+        }
+        pageHtml += "<li><a class='page-link' href='" + makeUrl(totalPage) +  "'>&raquo;</a></li>";
+
+        $("#paging-ul").html(pageHtml);
+    }
+
+    function makeUrl(page) {
+        let url = "/users/admin?page=" + page;
+
+        // 검색 했으면 다음 URL에도 추가
+        let keyword = [[${keyword}]];
+        url += "&keyword=" + keyword;
+
+        return url;
+    }
+</script>
+</body>
+</html>
