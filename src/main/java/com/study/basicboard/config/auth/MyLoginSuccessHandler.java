@@ -1,5 +1,7 @@
 package com.study.basicboard.config.auth;
 
+import com.study.basicboard.domain.entity.User;
+import com.study.basicboard.domain.enum_class.UserRole;
 import com.study.basicboard.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -15,7 +17,7 @@ import java.io.PrintWriter;
 @AllArgsConstructor
 public class MyLoginSuccessHandler implements AuthenticationSuccessHandler {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -23,11 +25,16 @@ public class MyLoginSuccessHandler implements AuthenticationSuccessHandler {
         HttpSession session = request.getSession();
         session.setMaxInactiveInterval(3600);
 
+        User loginUser = userRepository.findByLoginId(authentication.getName()).get();
+
         // 성공 시 메세지 출력 후 홈 화면으로 redirect
         response.setContentType("text/html");
         PrintWriter pw = response.getWriter();
-        String loginUserNickname = userRepository.findByLoginId(authentication.getName()).get().getNickname();
-        pw.println("<script>alert('" + loginUserNickname+ "님 반갑습니다!'); location.href='/';</script>");
+        if (loginUser.getUserRole().equals(UserRole.BLACKLIST)) {
+            pw.println("<script>alert('" + loginUser.getNickname() + "님은 블랙리스트 입니다. 글, 댓글 작성이 불가능합니다.'); location.href='/';</script>");
+        } else {
+            pw.println("<script>alert('" + loginUser.getNickname() + "님 반갑습니다!'); location.href='/';</script>");
+        }
         pw.flush();
     }
 }

@@ -4,6 +4,7 @@ import com.study.basicboard.domain.dto.UserDto;
 import com.study.basicboard.domain.dto.UserJoinRequest;
 import com.study.basicboard.domain.dto.UserLoginRequest;
 import com.study.basicboard.domain.entity.User;
+import com.study.basicboard.domain.enum_class.UserRole;
 import com.study.basicboard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -98,5 +99,11 @@ public class UserService {
 
     public Page<User> findAllByNickname(String keyword, PageRequest pageRequest) {
         return userRepository.findAllByNicknameContains(keyword, pageRequest);
+    }
+
+    @Transactional
+    public void changeRole(Long userId) {
+        User user = userRepository.findById(userId).get();
+        user.changeRole();
     }
 }

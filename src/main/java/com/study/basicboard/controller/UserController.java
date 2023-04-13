@@ -18,6 +18,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 @Controller
 @RequiredArgsConstructor
@@ -96,4 +98,17 @@ public class UserController {
         model.addAttribute("keyword", keyword);
         return "users/admin";
     }
+
+    @GetMapping("/admin/{userId}")
+    public String adminChangeRole(@PathVariable Long userId,
+                                  @RequestParam(required = false, defaultValue = "1") int page,
+                                  @RequestParam(required = false, defaultValue = "") String keyword) throws UnsupportedEncodingException {
+        userService.changeRole(userId);
+
+        System.out.println(page);
+        System.out.println(keyword);
+
+        return "redirect:/users/admin?page=" + page + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
+    }
+
 }

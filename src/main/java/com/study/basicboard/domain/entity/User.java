@@ -54,10 +54,6 @@ public class User {
         SecurityContextHolder.getContext().setAuthentication(newAuth);
     }
 
-    public void rankUp(UserRole userRole) {
-        this.userRole = userRole;
-    }
-
     public void likeChange(Integer receivedLikeCnt) {
         this.receivedLikeCnt = receivedLikeCnt;
         if (this.receivedLikeCnt >= 10 && this.userRole.equals(UserRole.SILVER)) {
@@ -68,5 +64,13 @@ public class User {
     public void edit(String newPassword, String newNickname) {
         this.password = newPassword;
         this.nickname = newNickname;
+    }
+
+    public void changeRole() {
+        if (userRole.equals(UserRole.BRONZE)) userRole = UserRole.SILVER;
+        else if (userRole.equals(UserRole.SILVER)) userRole = UserRole.GOLD;
+        else if (userRole.equals(UserRole.GOLD)) userRole = UserRole.BLACKLIST;
+        else if (userRole.equals(UserRole.BLACKLIST)) userRole = UserRole.ADMIN;
+        else userRole = UserRole.BRONZE;
     }
 }

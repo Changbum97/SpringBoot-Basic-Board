@@ -14,9 +14,10 @@
         <table class="table list-table table-hover text-center">
             <thead style="background-color: #A5F1E9">
             <tr>
+                <th style="width: 5%">#</th>
                 <th style="width: 15%">아이디</th>
                 <th style="width: 15%">닉네임</th>
-                <th style="width: 15%">등급</th>
+                <th style="width: 10%">등급</th>
                 <th style="width: 15%">가입일</th>
                 <th style="width: 10%">작성 글 수</th>
                 <th style="width: 10%">작성 댓글 수</th>
@@ -25,10 +26,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="user: ${users}">
+            <tr th:each="user: ${users}"
+                th:onclick="|location.href='@{/users/admin/{userId} (userId=${user.id}, page=${users.getNumber()}+1, keyword=${keyword})}'|">
+                <th style="width: 5%" th:text="${user.id}"/>
                 <th style="width: 15%" th:text="${user.loginId}"/>
                 <th style="width: 15%" th:text="${user.nickname}"/>
-                <th style="width: 15%" th:text="${user.userRole}"/>
+                <th style="width: 10%" th:text="${user.userRole}"/>
                 <th style="width: 15%" th:text="${#temporals.format(user.createdAt, 'yy/MM/dd HH:mm')}"/>
                 <th style="width: 10%" th:text="${user.boards.size}"/>
                 <th style="width: 10%" th:text="${user.comments.size}"/>
