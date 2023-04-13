@@ -9,7 +9,12 @@
     </div>
     <div class="col-6" align="center">
         <form class="form-group" style="height: 40px;" th:object="${boardSearchRequest}" th:method="get"
-              th:action="|@{/boards/{category} (category=${category}, searchType=*{searchType}, keyword=*{keyword})}|">
+              th:action="|@{/boards/{category} (category=${category}, sortType=*{sortType}, searchType=*{searchType}, keyword=*{keyword})}|">
+            <select th:field="*{sortType}" style="height: 40px;">
+                <option th:value="date">최신순</option>
+                <option th:value="like">좋아요순</option>
+                <option th:value="comment">댓글순</option>
+            </select>
             <select th:field="*{searchType}" style="height: 40px;">
                 <option th:value="title">제목</option>
                 <option th:value="nickname">작성자</option>
@@ -40,11 +45,9 @@
                 th:onclick="|location.href='@{/boards/{category}/{boardId} (category=${category}, boardId=${board.id})}'|">
                 <td style="width: 25%" th:text="${board.user.nickname}"/>
                 <td style="width: 40%" th:text="${board.title}"/>
-                <td style="width: 10%" th:text="${board.likes.size()}"/>
-                <td style="width: 10%" th:text="0"/>
+                <td style="width: 10%" th:text="${board.likeCnt}"/>
+                <td style="width: 10%" th:text="${board.commentCnt}"/>
                 <td style="width: 15%" th:text="${#temporals.format(board.createdAt, 'yy/MM/dd HH:mm')}"/>
-                <!--<td style="width: 7%" th:text="${board.likeCount}"/>
-                <td style="width: 7%" th:text="${board.commentCount}"/>-->
             </tr>
             </tbody>
         </table>
@@ -104,9 +107,13 @@
         let url = "/boards/" + category + "?page=" + page;
 
         // 검색 했으면 다음 URL에도 추가
+        let sortType = [[${boardSearchRequest.sortType}]];
         let searchType = [[${boardSearchRequest.searchType}]];
         let keyword = [[${boardSearchRequest.keyword}]];
 
+        if (sortType != null) {
+            url += "&sortType=" + sortType;
+        }
         if (searchType != null) {
             url += "&searchType=" + searchType + "&keyword=" + keyword;
         }

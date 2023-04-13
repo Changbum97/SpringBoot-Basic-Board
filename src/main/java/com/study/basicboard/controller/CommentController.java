@@ -20,7 +20,7 @@ public class CommentController {
     @PostMapping("/boards/{boardId}")
     public String addCommentsToBoard(@PathVariable Long boardId, @ModelAttribute CommentCreateRequest req,
                                      Authentication auth, Model model) {
-        commentService.writeCommentsToBoard(boardId, req, auth.getName());
+        commentService.writeComment(boardId, req, auth.getName());
 
         model.addAttribute("message", "댓글이 추가되었습니다.");
         model.addAttribute("nextUrl", "/boards/" + boardService.getCategory(boardId) + "/" + boardId);

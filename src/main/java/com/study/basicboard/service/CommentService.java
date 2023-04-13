@@ -23,9 +23,10 @@ public class CommentService {
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
 
-    public void writeCommentsToBoard(Long boardId, CommentCreateRequest req, String loginId) {
+    public void writeComment(Long boardId, CommentCreateRequest req, String loginId) {
         Board board = boardRepository.findById(boardId).get();
         User user = userRepository.findByLoginId(loginId).get();
+        board.commentChange(board.getCommentCnt() + 1);
         commentRepository.save(req.toEntity(board, user));
     }
 
@@ -42,7 +43,6 @@ public class CommentService {
         }
 
         Comment comment = optComment.get();
-        System.out.println(newBody);
         comment.update(newBody);
 
         return comment.getBoard().getId();
@@ -56,8 +56,10 @@ public class CommentService {
             return null;
         }
 
-        Long boardId = optComment.get().getBoard().getId();
+        Board board = optComment.get().getBoard();
+        board.commentChange(board.getCommentCnt() + 1);
+
         commentRepository.delete(optComment.get());
-        return boardId;
+        return board.getId();
     }
 }

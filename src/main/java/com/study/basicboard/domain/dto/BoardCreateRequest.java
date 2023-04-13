@@ -17,6 +17,8 @@ public class BoardCreateRequest {
                 .category(category)
                 .title(title)
                 .body(body)
+                .likeCnt(0)
+                .commentCnt(0)
                 .build();
     }
 }

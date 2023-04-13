@@ -28,11 +28,9 @@ public class LikeService {
 
         // 자신이 누른 좋아요가 아니라면
         if (!boardUser.equals(loginUser)) {
-            boardUser.receiveLike();
-            if (boardUser.getReceivedLikeCnt() >= 10 && boardUser.getUserRole().equals(UserRole.SILVER)) {
-                boardUser.rankUp(UserRole.GOLD);
-            }
+            boardUser.likeChange(boardUser.getReceivedLikeCnt() + 1);
         }
+        board.likeChange(board.getLikeCnt() + 1);
 
         likeRepository.save(Like.builder()
                         .user(loginUser)
@@ -48,8 +46,9 @@ public class LikeService {
 
         // 자신이 누른 좋아요가 아니라면
         if (!boardUser.equals(loginUser)) {
-            boardUser.cancelLike();
+            boardUser.likeChange(boardUser.getReceivedLikeCnt() - 1);
         }
+        board.likeChange(board.getLikeCnt() - 1);
 
         likeRepository.deleteByUserLoginIdAndBoardId(loginId, boardId);
     }

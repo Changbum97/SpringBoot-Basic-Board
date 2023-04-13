@@ -58,11 +58,10 @@ public class User {
         this.userRole = userRole;
     }
 
-    public void receiveLike() {
-        this.receivedLikeCnt ++;
-    }
-
-    public void cancelLike() {
-        this.receivedLikeCnt --;
+    public void likeChange(Integer receivedLikeCnt) {
+        this.receivedLikeCnt = receivedLikeCnt;
+        if (this.receivedLikeCnt >= 10 && this.userRole.equals(UserRole.SILVER)) {
+            this.userRole = UserRole.GOLD;
+        }
     }
 }

@@ -28,6 +28,7 @@ public class BoardController {
     @GetMapping("/{category}")
     public String boardListPage(@PathVariable String category, Model model,
                                 @RequestParam(required = false, defaultValue = "1") int page,
+                                @RequestParam(required = false) String sortType,
                                 @RequestParam(required = false) String searchType,
                                 @RequestParam(required = false) String keyword) {
         BoardCategory boardCategory = BoardCategory.of(category);
@@ -38,9 +39,19 @@ public class BoardController {
         }
 
         PageRequest pageRequest = PageRequest.of(page - 1, 10, Sort.by("id").descending());
+        if (sortType != null) {
+            if (sortType.equals("date")) {
+                pageRequest = PageRequest.of(page - 1, 10, Sort.by("createdAt").descending());
+            } else if (sortType.equals("like")) {
+                pageRequest = PageRequest.of(page - 1, 10, Sort.by("likeCnt").descending());
+            } else if (sortType.equals("comment")) {
+                pageRequest = PageRequest.of(page - 1, 10, Sort.by("commentCnt").descending());
+            }
+        }
+
         model.addAttribute("category", category);
         model.addAttribute("boards", boardService.getBoardList(boardCategory, pageRequest, searchType, keyword));
-        model.addAttribute("boardSearchRequest", new BoardSearchRequest(searchType, keyword));
+        model.addAttribute("boardSearchRequest", new BoardSearchRequest(sortType, searchType, keyword));
         return "boards/list";
     }
 

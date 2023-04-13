@@ -33,12 +33,23 @@ public class Board extends BaseEntity {
 
     @OneToMany(mappedBy = "board", orphanRemoval = true)
     private List<Like> likes;       // 좋아요
+    private Integer likeCnt;        // 좋아요 수
 
     @OneToMany(mappedBy = "board", orphanRemoval = true)
     private List<Comment> comments; // 댓글
+    private Integer commentCnt;     // 댓글 수
 
     public void update(BoardDto dto) {
         this.title = dto.getTitle();
         this.body = dto.getBody();
     }
+
+    public void likeChange(Integer likeCnt) {
+        this.likeCnt = likeCnt;
+    }
+
+    public void commentChange(Integer commentCnt) {
+        this.commentCnt = commentCnt;
+    }
+
 }
