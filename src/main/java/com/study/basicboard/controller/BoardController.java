@@ -3,8 +3,10 @@ package com.study.basicboard.controller;
 import com.study.basicboard.domain.dto.BoardCreateRequest;
 import com.study.basicboard.domain.dto.BoardDto;
 import com.study.basicboard.domain.dto.BoardSearchRequest;
+import com.study.basicboard.domain.dto.CommentCreateRequest;
 import com.study.basicboard.domain.enum_class.BoardCategory;
 import com.study.basicboard.service.BoardService;
+import com.study.basicboard.service.CommentService;
 import com.study.basicboard.service.LikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +23,7 @@ public class BoardController {
 
     private final BoardService boardService;
     private final LikeService likeService;
+    private final CommentService commentService;
 
     @GetMapping("/{category}")
     public String boardListPage(@PathVariable String category, Model model,
@@ -80,7 +83,6 @@ public class BoardController {
                                   Authentication auth) {
         if (auth != null) {
             model.addAttribute("loginUserLoginId", auth.getName());
-            System.out.println(likeService.checkLike(auth.getName(), boardId));
             model.addAttribute("likeCheck", likeService.checkLike(auth.getName(), boardId));
         }
 
@@ -94,6 +96,9 @@ public class BoardController {
 
         model.addAttribute("boardDto", boardDto);
         model.addAttribute("category", category);
+
+        model.addAttribute("commentCreateRequest", new CommentCreateRequest());
+        model.addAttribute("commentList", commentService.findAll(boardId));
         return "boards/detail";
     }
 

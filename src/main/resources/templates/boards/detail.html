@@ -58,7 +58,53 @@
             <button class="btn del-btn" onclick="clickDelete()">삭제</button>
         </div>
         <br/><hr/>
+        <form class="form-group" th:object="${commentCreateRequest}"  th:method="post" th:action="|@{/comments/boards/{boardId} (boardId=${boardDto.id})}|">
+            <div style="text-align: right">
+                <!-- 로그인 했을 때 -->
+                <div sec:authorize="isAuthenticated()">
+                    <textarea rows="3" th:field="*{body}" placeholder="댓글을 입력해 주세요" style="width: 100%"/>
+                    <button class="btn post-btn" type="submit">댓글 추가</button>
+                </div>
+                <!-- 로그인 안 했을 때 -->
+                <div sec:authorize="isAnonymous()">
+                    <textarea rows="3" th:field="*{body}" placeholder="로그인한 유저만 댓글을 작성할 수 있습니다" style="width: 100%" readonly/>
+                </div>
+            </div>
+        </form>
+        <br/>
+        <h3 th:text="${commentList.size()} + '개의 댓글'"></h3>
+        <hr/>
+        <div th:each="comment : ${commentList}" th:align="left">
+            <form class="card" style="width: 80%" th:object="${commentCreateRequest}" th:method="post"
+                  th:action="|@{/comments/{commentId}/edit (commentId=${comment.id})}|">
+                <div class="card-body" style="text-align: left;">
+                    <div>
+                        <div style="float: left">
+                            <h5 class="card-title" th:text="'작성자 : ' + ${comment.user.nickname}"></h5>
+                            <h6 class="card-subtitle mb-2 text-muted" th:text="'작성일 : ' + ${#temporals.format(comment.createdAt, 'yy/MM/dd HH:mm')}"></h6>
+                        </div>
+                        <div th:if="${comment.user.loginId == loginUserLoginId}" style="float: right;">
+                            <button type="submit" class="btn edit-btn" style="width: fit-content; margin: 0px;">수정</button>
+                            <button type="button" class="btn del-btn" style="width: fit-content; margin: 0px;"
+                                    th:onclick="|location.href='@{/comments/{commentId}/delete (commentId=${comment.id})}'|">삭제</button>
+                        </div>
+                        <div th:unless="${comment.user.loginId == loginUserLoginId}" sec:authorize="hasAuthority('ADMIN')" style="float: right;">
+                            <button type="button" class="btn del-btn" style="width: fit-content; margin: 0px;"
+                                    th:onclick="|location.href='@{/comments/{commentId}/delete (commentId=${comment.id})}'|">삭제</button>
+                        </div>
+                    </div>
 
+                    <div th:if="${comment.user.loginId == loginUserLoginId}">
+                            <textarea rows="3" class="card-text" th:text="${comment.body}" id="body" name="body"
+                                      style="margin-bottom: 10px; width: 100%"></textarea>
+                    </div>
+                    <div th:unless="${comment.user.loginId == loginUserLoginId}">
+                        <textarea rows="3" class="card-text" th:text="${comment.body}" style="margin-bottom: 10px; width: 100%" readonly></textarea>
+                    </div>
+                </div>
+            </form>
+            <br/>
+        </div>
     </div>
 </div>
 

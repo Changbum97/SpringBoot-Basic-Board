@@ -40,6 +40,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Like> likes;       // 좋아요
 
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments; // 댓글
+
     public void rankUp(UserRole userRole, Authentication auth) {
         this.userRole = userRole;
 

@@ -34,6 +34,9 @@ public class Board extends BaseEntity {
     @OneToMany(mappedBy = "board")
     private List<Like> likes;       // 좋아요
 
+    @OneToMany(mappedBy = "board")
+    private List<Comment> comments; // 댓글
+
     public void update(BoardDto dto) {
         this.title = dto.getTitle();
         this.body = dto.getBody();
