@@ -1,6 +1,9 @@
 package com.study.basicboard.service;
 
+import com.study.basicboard.domain.entity.Board;
 import com.study.basicboard.domain.entity.Like;
+import com.study.basicboard.domain.entity.User;
+import com.study.basicboard.domain.enum_class.UserRole;
 import com.study.basicboard.repository.BoardRepository;
 import com.study.basicboard.repository.LikeRepository;
 import com.study.basicboard.repository.UserRepository;
@@ -17,15 +20,37 @@ public class LikeService {
     private final UserRepository userRepository;
     private final BoardRepository boardRepository;
 
+    @Transactional
     public void addLike(String loginId, Long boardId) {
+        Board board = boardRepository.findById(boardId).get();
+        User loginUser = userRepository.findByLoginId(loginId).get();
+        User boardUser = board.getUser();
+
+        // 자신이 누른 좋아요가 아니라면
+        if (!boardUser.equals(loginUser)) {
+            boardUser.receiveLike();
+            if (boardUser.getReceivedLikeCnt() >= 10 && boardUser.getUserRole().equals(UserRole.SILVER)) {
+                boardUser.rankUp(UserRole.GOLD);
+            }
+        }
+
         likeRepository.save(Like.builder()
-                        .user(userRepository.findByLoginId(loginId).get())
-                        .board(boardRepository.findById(boardId).get())
+                        .user(loginUser)
+                        .board(board)
                         .build());
     }
 
     @Transactional
     public void deleteLike(String loginId, Long boardId) {
+        Board board = boardRepository.findById(boardId).get();
+        User loginUser = userRepository.findByLoginId(loginId).get();
+        User boardUser = board.getUser();
+
+        // 자신이 누른 좋아요가 아니라면
+        if (!boardUser.equals(loginUser)) {
+            boardUser.cancelLike();
+        }
+
         likeRepository.deleteByUserLoginIdAndBoardId(loginId, boardId);
     }
 

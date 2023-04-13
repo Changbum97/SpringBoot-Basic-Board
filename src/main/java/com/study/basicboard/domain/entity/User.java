@@ -30,6 +30,7 @@ public class User {
     private String password;    // 비밀번호
     private String nickname;    // 닉네임
     private LocalDateTime createdAt;    // 가입 시간
+    private Integer receivedLikeCnt; // 유저가 받은 좋아요 개수 (본인 제외)
 
     @Enumerated(EnumType.STRING)
     private UserRole userRole;      // 권한
@@ -38,7 +39,7 @@ public class User {
     private List<Board> boards;     // 작성글
 
     @OneToMany(mappedBy = "user")
-    private List<Like> likes;       // 좋아요
+    private List<Like> likes;       // 유저가 누른 좋아요
 
     @OneToMany(mappedBy = "user")
     private List<Comment> comments; // 댓글
@@ -51,5 +52,17 @@ public class User {
         updatedAuthorities.add(new SimpleGrantedAuthority(userRole.name()));
         Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), updatedAuthorities);
         SecurityContextHolder.getContext().setAuthentication(newAuth);
+    }
+
+    public void rankUp(UserRole userRole) {
+        this.userRole = userRole;
+    }
+
+    public void receiveLike() {
+        this.receivedLikeCnt ++;
+    }
+
+    public void cancelLike() {
+        this.receivedLikeCnt --;
     }
 }

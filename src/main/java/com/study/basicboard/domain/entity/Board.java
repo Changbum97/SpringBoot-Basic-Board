@@ -31,10 +31,10 @@ public class Board extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;      // 작성자
 
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board", orphanRemoval = true)
     private List<Like> likes;       // 좋아요
 
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board", orphanRemoval = true)
     private List<Comment> comments; // 댓글
 
     public void update(BoardDto dto) {

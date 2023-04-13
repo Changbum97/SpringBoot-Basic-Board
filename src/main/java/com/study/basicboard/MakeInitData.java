@@ -28,6 +28,7 @@ public class MakeInitData {
                 .password(encoder.encode("1234"))
                 .createdAt(LocalDateTime.now())
                 .nickname("관리자")
+                .receivedLikeCnt(0)
                 .userRole(UserRole.ADMIN)
                 .build();
 
@@ -38,6 +39,7 @@ public class MakeInitData {
                 .password(encoder.encode("1234"))
                 .createdAt(LocalDateTime.now())
                 .nickname("유저1")
+                .receivedLikeCnt(0)
                 .userRole(UserRole.BRONZE)
                 .build();
 

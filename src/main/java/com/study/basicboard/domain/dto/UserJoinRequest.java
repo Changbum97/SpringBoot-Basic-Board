@@ -21,6 +21,7 @@ public class UserJoinRequest {
                 .nickname(nickname)
                 .userRole(UserRole.BRONZE)
                 .createdAt(LocalDateTime.now())
+                .receivedLikeCnt(0)
                 .build();
     }
 }

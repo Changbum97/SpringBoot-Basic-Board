@@ -119,6 +119,12 @@ public class BoardController {
 
     @GetMapping("/{category}/{boardId}/delete")
     public String boardDelete(@PathVariable String category, @PathVariable Long boardId, Model model) {
+        if (category.equals("greeting")) {
+            model.addAttribute("message", "가입인사는 삭제할 수 없습니다.");
+            model.addAttribute("nextUrl", "/boards/greeting");
+            return "printMessage";
+        }
+
         Long deletedBoardId = boardService.deleteBoard(boardId, category);
 
         // id에 해당하는 게시글이 없거나 카테고리가 일치하지 않으면 에러 메세지 출력
