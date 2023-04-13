@@ -2,8 +2,10 @@ package com.study.basicboard.controller;
 
 import com.study.basicboard.domain.dto.UserJoinRequest;
 import com.study.basicboard.domain.dto.UserLoginRequest;
+import com.study.basicboard.service.BoardService;
 import com.study.basicboard.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +19,7 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
+    private final BoardService boardService;
 
     @GetMapping("/join")
     public String joinPage(Model model) {
@@ -42,6 +45,14 @@ public class UserController {
     public String loginPage(Model model) {
         model.addAttribute("userLoginRequest", new UserLoginRequest());
         return "users/login";
+    }
+
+    @GetMapping("/myPage/{category}")
+    public String myPage(@PathVariable String category, Authentication auth, Model model) {
+        model.addAttribute("boards", boardService.findMyBoard(category, auth.getName()));
+        model.addAttribute("category", category);
+        model.addAttribute("user", userService.myInfo(auth.getName()));
+        return "users/myPage";
     }
 
 }

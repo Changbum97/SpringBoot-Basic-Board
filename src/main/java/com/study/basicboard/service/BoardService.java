@@ -5,10 +5,14 @@ import com.study.basicboard.config.auth.UserDetailService;
 import com.study.basicboard.domain.dto.BoardCreateRequest;
 import com.study.basicboard.domain.dto.BoardDto;
 import com.study.basicboard.domain.entity.Board;
+import com.study.basicboard.domain.entity.Comment;
+import com.study.basicboard.domain.entity.Like;
 import com.study.basicboard.domain.entity.User;
 import com.study.basicboard.domain.enum_class.BoardCategory;
 import com.study.basicboard.domain.enum_class.UserRole;
 import com.study.basicboard.repository.BoardRepository;
+import com.study.basicboard.repository.CommentRepository;
+import com.study.basicboard.repository.LikeRepository;
 import com.study.basicboard.repository.UserRepository;
 import jdk.jfr.Category;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +27,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +37,8 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
     private final UserRepository userRepository;
+    private final LikeRepository likeRepository;
+    private final CommentRepository commentRepository;
 
     public Page<Board> getBoardList(BoardCategory category, PageRequest pageRequest, String searchType, String keyword) {
         if (searchType != null && keyword != null) {
@@ -96,5 +103,31 @@ public class BoardService {
     public String getCategory(Long boardId) {
         Board board = boardRepository.findById(boardId).get();
         return board.getCategory().toString().toLowerCase();
+    }
+
+    public List<Board> findMyBoard(String category, String loginId) {
+        if (category.equals("board")) {
+            return boardRepository.findAllByUserLoginId(loginId);
+        } else if (category.equals("like")) {
+            List<Like> likes = likeRepository.findAllByUserLoginId(loginId);
+            List<Board> boards = new ArrayList<>();
+            for (Like like : likes) {
+                boards.add(like.getBoard());
+            }
+            return boards;
+        } else if (category.equals("comment")) {
+            List<Comment> comments = commentRepository.findAllByUserLoginId(loginId);
+            List<Board> boards = new ArrayList<>();
+            HashSet<Long> commentIds = new HashSet<>();
+
+            for (Comment comment : comments) {
+                if (!commentIds.contains(comment.getBoard().getId())) {
+                    boards.add(comment.getBoard());
+                    commentIds.add(comment.getBoard().getId());
+                }
+            }
+            return boards;
+        }
+        return null;
     }
 }

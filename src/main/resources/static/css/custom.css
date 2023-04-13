@@ -88,6 +88,34 @@
     animation: jelly 0.5s;
 }
 
+.select-btn {
+    background-color: deepskyblue;
+    font-weight: bold;
+    margin: 0px 30px;
+    border: none;
+    height: 40px;
+    width: 130px;
+}
+
+.select-btn:hover, .select-btn:focus, .select-btn:active:focus {
+    background-color: dodgerblue;
+    animation: jelly 0.5s;
+}
+
+.selected-btn {
+    background-color: cornflowerblue;
+    font-weight: bold;
+    margin: 0px 30px;
+    border: none;
+    height: 40px;
+    width: 130px;
+}
+
+.selected-btn:hover, .selected-btn:focus, .selected-btn:active:focus {
+    background-color: dodgerblue;
+    animation: jelly 0.5s;
+}
+
 @keyframes jelly {
     25% {
         transform: scale(0.9, 1.1);

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header.html :: head" />
+<body>
+<div th:replace="fragments/header.html :: header ('myPage')"/>
+<div th:replace="fragments/myPageHeader.html :: myPageHeader"/>
+<br/><br/>
+<div class="row">
+    <div class="offset-2 col-1">
+        <h5>전체: [[${boards.size}]]개</h5>
+    </div>
+    <div class="col-6" align="center">
+        <button th:if="${category == 'board'}" class="btn selected-btn" style="margin: 0px 30px;" onclick="location.href='/users/myPage/board'">작성한 글</button>
+        <button th:unless="${category == 'board'}" class="btn select-btn" style="margin: 0px 30px;" onclick="location.href='/users/myPage/board'">작성한 글</button>
+        <button th:if="${category == 'like'}" class="btn selected-btn" style="margin: 0px 30px;" onclick="location.href='/users/myPage/like'">좋아요 누른 글</button>
+        <button th:unless="${category == 'like'}" class="btn select-btn" style="margin: 0px 30px;" onclick="location.href='/users/myPage/like'">좋아요 누른 글</button>
+        <button th:if="${category == 'comment'}"  class="btn selected-btn" style="margin: 0px 30px;" onclick="location.href='/users/myPage/comment'">댓글 추가한 글</button>
+        <button th:unless="${category == 'comment'}"  class="btn select-btn" style="margin: 0px 30px;" onclick="location.href='/users/myPage/comment'">댓글 추가한 글</button>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="offset-2 col-8">
+        <table class="table list-table table-hover text-center">
+            <thead style="background-color: #A5F1E9">
+            <tr>
+                <th style="width: 25%">작성자</th>
+                <th style="width: 40%">제목</th>
+                <th style="width: 10%">좋아요</th>
+                <th style="width: 10%">댓글</th>
+                <th style="width: 15%">작성일</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="board: ${boards}"
+                th:onclick="|location.href='@{/boards/{category}/{boardId} (category=${#strings.toLowerCase(board.category)}, boardId=${board.id})}'|">
+                <td style="width: 25%" th:text="${board.user.nickname}"/>
+                <td style="width: 40%" th:text="${board.title}"/>
+                <td style="width: 10%" th:text="${board.likeCnt}"/>
+                <td style="width: 10%" th:text="${board.commentCnt}"/>
+                <td style="width: 15%" th:text="${#temporals.format(board.createdAt, 'yy/MM/dd HH:mm')}"/>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

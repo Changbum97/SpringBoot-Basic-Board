@@ -2,6 +2,7 @@ package com.study.basicboard.service;
 
 import com.study.basicboard.domain.dto.UserJoinRequest;
 import com.study.basicboard.domain.dto.UserLoginRequest;
+import com.study.basicboard.domain.entity.User;
 import com.study.basicboard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -51,5 +52,7 @@ public class UserService {
         userRepository.save(req.toEntity( encoder.encode(req.getPassword()) ));
     }
 
-
+    public User myInfo(String loginId) {
+        return userRepository.findByLoginId(loginId).get();
+    }
 }
