@@ -6,7 +6,7 @@
 <div class="row">
     <form class="offset-4 col-4 form-group user-form" th:method="post" th:action="@{/users/join}" th:object="${userJoinRequest}" align="left">
         <div>
-            <label th:for="loginId">아이디</label><br/>
+            <label th:for="loginId">아이디 (아이디는 변경할 수 없습니다)</label><br/>
             <input type="text" th:field="*{loginId}" placeholder="아이디를 입력해주세요.(최대 10자)"
                     th:errorclass="error-input"/>
             <div th:class="error-div" th:errors="*{loginId}"/>
@@ -14,7 +14,7 @@
         <br/>
         <div>
             <label th:for="password">비밀번호</label><br/>
-            <input type="password" th:field="*{password}" placeholder="비밀번호를 입력해주세요.(최대 10자)"
+            <input type="password" th:field="*{password}" placeholder="비밀번호를 입력해주세요."
                    th:errorclass="error-input"/>
             <div th:class="error-div" th:errors="*{password}"/>
         </div>

@@ -1,7 +1,9 @@
 package com.study.basicboard.controller;
 
+import com.study.basicboard.domain.dto.UserDto;
 import com.study.basicboard.domain.dto.UserJoinRequest;
 import com.study.basicboard.domain.dto.UserLoginRequest;
+import com.study.basicboard.domain.entity.User;
 import com.study.basicboard.service.BoardService;
 import com.study.basicboard.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -55,4 +57,26 @@ public class UserController {
         return "users/myPage";
     }
 
+    @GetMapping("/edit")
+    public String userEditPage(Authentication auth, Model model) {
+        User user = userService.myInfo(auth.getName());
+        model.addAttribute("userDto", UserDto.of(user));
+        return "users/edit";
+    }
+
+    @PostMapping("/edit")
+    public String userEdit(@Valid @ModelAttribute UserDto dto, BindingResult bindingResult,
+                           Authentication auth, Model model) {
+
+        // Validation
+        if (userService.editValid(dto, bindingResult, auth.getName()).hasErrors()) {
+            return "users/edit";
+        }
+
+        userService.edit(dto, auth.getName());
+
+        model.addAttribute("message", "정보가 수정되었습니다.");
+        model.addAttribute("nextUrl", "/users/myPage/board");
+        return "printMessage";
+    }
 }

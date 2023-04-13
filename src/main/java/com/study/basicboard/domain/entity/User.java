@@ -64,4 +64,9 @@ public class User {
             this.userRole = UserRole.GOLD;
         }
     }
+
+    public void edit(String newPassword, String newNickname) {
+        this.password = newPassword;
+        this.nickname = newNickname;
+    }
 }

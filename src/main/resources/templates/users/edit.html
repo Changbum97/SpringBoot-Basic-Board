@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header.html :: head" />
+<body>
+<div th:replace="fragments/header.html :: header ('edit')"/>
+<div class="row">
+    <form class="offset-4 col-4 form-group user-form" th:method="post" th:action="@{/users/edit}" th:object="${userDto}" align="left">
+        <div>
+            <label th:for="loginId">아이디 (아이디는 변경할 수 없습니다)</label><br/>
+            <input type="text" th:field="*{loginId}" readonly/>
+        </div>
+        <br/>
+        <div>
+            <label th:for="nowPassword">현재 비밀번호</label><br/>
+            <input type="password" th:field="*{nowPassword}" placeholder="현재 비밀번호를 입력해주세요."
+                   th:errorclass="error-input"/>
+            <div th:class="error-div" th:errors="*{nowPassword}"/>
+        </div>
+        <br/>
+        <div>
+            <label th:for="newPassword">새 비밀번호 (변경하지 않으려면 비워두세요)</label><br/>
+            <input type="password" th:field="*{newPassword}" placeholder="새 비밀번호를 입력해주세요. (최대 10자)"
+                   th:errorclass="error-input"/>
+            <div th:class="error-div" th:errors="*{newPassword}"/>
+        </div>
+        <br/>
+        <div>
+            <label th:for="newPasswordCheck">새 비밀번호 체크</label><br/>
+            <input type="password" th:field="*{newPasswordCheck}" placeholder="새 비밀번호를 한 번 더 입력해주세요."
+                   th:errorclass="error-input"/>
+            <div th:class="error-div" th:errors="*{newPasswordCheck}"/>
+        </div>
+        <br/>
+        <div>
+            <label th:for="nickname">닉네임 (최대 10자)</label><br/>
+            <input type="text" th:field="*{nickname}" th:errorclass="error-input"/>
+            <div th:class="error-div" th:errors="*{nickname}"/>
+        </div>
+        <br/><br/>
+        <div align="center">
+            <button class="btn user-btn" type="submit">정보 수정</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
