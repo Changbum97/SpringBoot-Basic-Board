@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header.html :: head" />
 <body>
-<div th:replace="fragments/header.html :: header ('join')"/>
+<div th:replace="fragments/header.html :: header ('user')"/>
 <div class="row">
     <form class="offset-4 col-4 form-group user-form" th:method="post" th:action="@{/users/join}" th:object="${userJoinRequest}" align="left">
         <div>

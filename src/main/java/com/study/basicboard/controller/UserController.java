@@ -86,6 +86,28 @@ public class UserController {
         return "printMessage";
     }
 
+    @GetMapping("/delete")
+    public String userDeletePage(Authentication auth, Model model) {
+        User user = userService.myInfo(auth.getName());
+        model.addAttribute("userDto", UserDto.of(user));
+        return "users/delete";
+    }
+
+    @PostMapping("/delete")
+    public String userDelete(@ModelAttribute UserDto dto, Authentication auth, Model model) {
+        Boolean deleteSuccess = userService.delete(auth.getName(), dto.getNowPassword());
+        if (deleteSuccess) {
+            model.addAttribute("message", "탈퇴 되었습니다.");
+            model.addAttribute("nextUrl", "/users/logout");
+            return "printMessage";
+        } else {
+            model.addAttribute("message", "현재 비밀번호가 틀려 탈퇴에 실패하였습니다.");
+            model.addAttribute("nextUrl", "/users/delete");
+            return "printMessage";
+        }
+    }
+
+    @PostMapping("/")
     @GetMapping("/admin")
     public String adminPage(@RequestParam(required = false, defaultValue = "1") int page,
                             @RequestParam(required = false, defaultValue = "") String keyword,
