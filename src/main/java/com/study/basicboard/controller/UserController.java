@@ -107,7 +107,6 @@ public class UserController {
         }
     }
 
-    @PostMapping("/")
     @GetMapping("/admin")
     public String adminPage(@RequestParam(required = false, defaultValue = "1") int page,
                             @RequestParam(required = false, defaultValue = "") String keyword,
