@@ -14,7 +14,7 @@ import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.Random;
 
-@Component
+//@Component
 @RequiredArgsConstructor
 public class MakeInitData {
 
@@ -22,7 +22,7 @@ public class MakeInitData {
     private final BoardRepository boardRepository;
     private final BCryptPasswordEncoder encoder;
 
-    @PostConstruct
+    //@PostConstruct
     public void make() {
         User admin = User.builder()
                 .loginId("admin")
