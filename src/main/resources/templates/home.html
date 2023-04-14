@@ -3,5 +3,47 @@
 <head th:replace="fragments/header.html :: head" />
 <body>
     <div th:replace="fragments/header.html :: header ('home')"/>
+    <div class="row">
+        <div class="offset-1 col-5 card">
+            <div class="card-body">
+                <h2>사용 방법</h2> <br/>
+                <h5>&ast; 회원가입을 하면 BRONZE 등급입니다.</h5>
+                <h5>&ast; 가입인사를 남기면 SILVER 등급으로 승급합니다.</h5>
+                <h5>&ast; SILVER 등급 이상의 유저만 자유게시판에 글을 작성할 수 있습니다.</h5>
+                <h5>&ast; 자신의 모든 글에 좋아요가 총 10개이상 달리면 GOLD 등급으로 승급합니다. (자신의 좋아요 제외)</h5>
+                <h5>&ast; GOLD 등급의 유저만 골드게시판에 입장할 수 있습니다.</h5>
+                <h5>&ast; 타인에게 불쾌감을 주는 글 작성 시 BLACKLIST가 될 수 있습니다.</h5>
+                <h5>&ast; BLACKLIST는 글, 댓글 작성이 불가능합니다.</h5>
+                <h5>&ast; 관리자는 모든 글, 댓글 삭제 가능합니다.</h5>
+                <h5>&ast; 마이페이지에서는 내 정보 확인, 수정이 가능합니다.</h5>
+                <h5>&ast; 마이페이지에서는 내가 작성한 글, 좋아요 누른 글, 댓글 단 글을 확인할 수 있습니다.</h5>
+            </div>
+        </div>
+        <div class="offset-2 col-3">
+            <div class="card" style="height: fit-content">
+                <div class="card-body">
+                    <h2>전체 유저 정보</h2><br/>
+                    <h5>&ast; 전체 유저: [[${userCntDto.totalUserCnt}]]명</h5>
+                    <h5>&ast; BRONZE 유저: [[${userCntDto.totalBronzeCnt}]]명</h5>
+                    <h5>&ast; SILVER 유저: [[${userCntDto.totalSilverCnt}]]명</h5>
+                    <h5>&ast; GOLD 유저: [[${userCntDto.totalGoldCnt}]]명</h5>
+                    <h5>&ast; BLACKLIST 유저: [[${userCntDto.totalBlacklistCnt}]]명</h5>
+                </div>
+            </div> <br/>
+            <div class="card" style="height: fit-content">
+                <div class="card-body">
+                    <h2>전체 게시판 정보</h2><br/>
+                    <h5>&ast; 전체 글: [[${boardCntDto.totalBoardCnt}]]개</h5>
+                    <h5>&ast; 가입 인사: [[${boardCntDto.totalGreetingCnt}]]개</h5>
+                    <h5>&ast; 자유게시판 게시글: [[${boardCntDto.totalFreeCnt}]]개</h5>
+                    <h5>&ast; 골드게시판 게시글: [[${boardCntDto.totalGoldCnt}]]개</h5>
+                </div>
+            </div>
+        </div>
 </body>
+<style>
+    h5 {
+        margin-bottom: 15px;
+    }
+</style>
 </html>

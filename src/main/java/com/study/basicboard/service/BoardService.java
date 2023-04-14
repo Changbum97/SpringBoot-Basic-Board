@@ -2,6 +2,7 @@ package com.study.basicboard.service;
 
 import com.study.basicboard.config.SecurityConfig;
 import com.study.basicboard.config.auth.UserDetailService;
+import com.study.basicboard.domain.dto.BoardCntDto;
 import com.study.basicboard.domain.dto.BoardCreateRequest;
 import com.study.basicboard.domain.dto.BoardDto;
 import com.study.basicboard.domain.entity.Board;
@@ -100,6 +101,8 @@ public class BoardService {
             return null;
         }
 
+        User boardUser = optBoard.get().getUser();
+        boardUser.likeChange(boardUser.getReceivedLikeCnt() - optBoard.get().getLikeCnt());
         boardRepository.deleteById(boardId);
         return boardId;
     }
@@ -133,5 +136,14 @@ public class BoardService {
             return boards;
         }
         return null;
+    }
+
+    public BoardCntDto getBoardCnt(){
+        return BoardCntDto.builder()
+                .totalBoardCnt(boardRepository.count())
+                .totalGreetingCnt(boardRepository.countAllByCategory(BoardCategory.GREETING))
+                .totalFreeCnt(boardRepository.countAllByCategory(BoardCategory.FREE))
+                .totalGoldCnt(boardRepository.countAllByCategory(BoardCategory.GOLD))
+                .build();
     }
 }

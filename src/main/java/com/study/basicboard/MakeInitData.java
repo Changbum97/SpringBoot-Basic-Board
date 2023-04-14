@@ -64,8 +64,8 @@ public class MakeInitData {
                     .title("제목" + i)
                     .body("내용" + i + i + i)
                     .category(BoardCategory.FREE)
-                    .commentCnt(random.nextInt(20))
-                    .likeCnt(random.nextInt(20))
+                    .commentCnt(0)
+                    .likeCnt(0)
                     .user(user)
                     .build());
         }
@@ -77,8 +77,8 @@ public class MakeInitData {
                     .body("내용" + i + i + i)
                     .category(BoardCategory.FREE)
                     .user(admin)
-                    .commentCnt(random.nextInt(50))
-                    .likeCnt(random.nextInt(50))
+                    .commentCnt(0)
+                    .likeCnt(0)
                     .build());
         }
     }

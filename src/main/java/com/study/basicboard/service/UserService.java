@@ -1,5 +1,6 @@
 package com.study.basicboard.service;
 
+import com.study.basicboard.domain.dto.UserCntDto;
 import com.study.basicboard.domain.dto.UserDto;
 import com.study.basicboard.domain.dto.UserJoinRequest;
 import com.study.basicboard.domain.dto.UserLoginRequest;
@@ -105,5 +106,15 @@ public class UserService {
     public void changeRole(Long userId) {
         User user = userRepository.findById(userId).get();
         user.changeRole();
+    }
+
+    public UserCntDto getUserCnt() {
+        return UserCntDto.builder()
+                .totalUserCnt(userRepository.count())
+                .totalBronzeCnt(userRepository.countAllByUserRole(UserRole.BRONZE))
+                .totalSilverCnt(userRepository.countAllByUserRole(UserRole.SILVER))
+                .totalGoldCnt(userRepository.countAllByUserRole(UserRole.GOLD))
+                .totalBlacklistCnt(userRepository.countAllByUserRole(UserRole.BLACKLIST))
+                .build();
     }
 }
