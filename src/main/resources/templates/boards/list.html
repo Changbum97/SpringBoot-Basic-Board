@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/header.html :: head" />
 <body>
 <div th:replace="fragments/header.html :: header (${category})"/>
@@ -24,8 +24,10 @@
         </form>
     </div>
     <div class="col-1" align="right">
-        <button class="btn post-btn" type="button"
+        <button  sec:authorize="!hasAuthority('ADMIN')" class="btn post-btn" type="button"
                 th:onclick="|location.href='@{/boards/{category}/write (category=${category})}'|">글 작성</button>
+        <button  sec:authorize="hasAuthority('ADMIN')" class="btn post-btn" type="button"
+                th:onclick="|location.href='@{/boards/{category}/write (category=${category})}'|">공지 작성</button>
     </div>
 </div>
 <div class="row">
@@ -33,18 +35,27 @@
         <table class="table list-table table-hover text-center">
             <thead style="background-color: #A5F1E9">
             <tr>
-                <th style="width: 25%">작성자</th>
-                <th style="width: 40%">제목</th>
+                <th style="width: 20%">작성자</th>
+                <th style="width: 45%">제목</th>
                 <th style="width: 10%">좋아요</th>
                 <th style="width: 10%">댓글</th>
                 <th style="width: 15%">작성일</th>
             </tr>
             </thead>
             <tbody>
+            <tr th:each="notice: ${notices}"
+                th:onclick="|location.href='@{/boards/{category}/{boardId} (category=${category}, boardId=${notice.id})}'|"
+                class="notice-tr">
+                <td style="width: 20%" th:text="${notice.user.nickname}"/>
+                <td style="width: 45%" th:text="${notice.title}"/>
+                <td style="width: 10%" th:text="${notice.likeCnt}"/>
+                <td style="width: 10%" th:text="${notice.commentCnt}"/>
+                <td style="width: 15%" th:text="${#temporals.format(notice.createdAt, 'yy/MM/dd HH:mm')}"/>
+            </tr>
             <tr th:each="board: ${boards}"
                 th:onclick="|location.href='@{/boards/{category}/{boardId} (category=${category}, boardId=${board.id})}'|">
-                <td style="width: 25%" th:text="${board.user.nickname}"/>
-                <td style="width: 40%" th:text="${board.title}"/>
+                <td style="width: 20%" th:text="${board.user.nickname}"/>
+                <td style="width: 45%" th:text="${board.title}"/>
                 <td style="width: 10%" th:text="${board.likeCnt}"/>
                 <td style="width: 10%" th:text="${board.commentCnt}"/>
                 <td style="width: 15%" th:text="${#temporals.format(board.createdAt, 'yy/MM/dd HH:mm')}"/>

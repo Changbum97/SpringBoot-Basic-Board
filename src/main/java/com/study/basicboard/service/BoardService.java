@@ -43,12 +43,16 @@ public class BoardService {
     public Page<Board> getBoardList(BoardCategory category, PageRequest pageRequest, String searchType, String keyword) {
         if (searchType != null && keyword != null) {
             if (searchType.equals("title")) {
-                return boardRepository.findAllByCategoryAndTitleContains(category, keyword, pageRequest);
+                return boardRepository.findAllByCategoryAndTitleContainsAndUserUserRoleNot(category, keyword, UserRole.ADMIN, pageRequest);
             } else {
-                return boardRepository.findAllByCategoryAndUserNicknameContains(category, keyword, pageRequest);
+                return boardRepository.findAllByCategoryAndUserNicknameContainsAndUserUserRoleNot(category, keyword, UserRole.ADMIN, pageRequest);
             }
         }
-        return boardRepository.findAllByCategory(category, pageRequest);
+        return boardRepository.findAllByCategoryAndUserUserRoleNot(category, UserRole.ADMIN, pageRequest);
+    }
+
+    public List<Board> getNotice(BoardCategory category) {
+        return boardRepository.findAllByCategoryAndUserUserRole(category, UserRole.ADMIN);
     }
 
     public BoardDto getBoard(Long boardId, String category) {

@@ -38,6 +38,8 @@ public class BoardController {
             return "printMessage";
         }
 
+        model.addAttribute("notices", boardService.getNotice(boardCategory));
+
         PageRequest pageRequest = PageRequest.of(page - 1, 10, Sort.by("id").descending());
         if (sortType != null) {
             if (sortType.equals("date")) {
