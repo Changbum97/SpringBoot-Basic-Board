@@ -8,11 +8,8 @@ import com.study.basicboard.repository.BoardRepository;
 import com.study.basicboard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
-import java.util.Random;
 
 //@Component
 @RequiredArgsConstructor
@@ -56,8 +53,6 @@ public class MakeInitData {
                     .userRole(UserRole.BRONZE)
                     .build());
         }
-
-        Random random = new Random();
 
         for (int i = 1 ; i <= 101 ; i ++) {
             boardRepository.save(Board.builder()
