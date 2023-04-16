@@ -8,10 +8,12 @@ import com.study.basicboard.repository.BoardRepository;
 import com.study.basicboard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 
-//@Component
+@Component
 @RequiredArgsConstructor
 public class MakeInitData {
 
@@ -19,7 +21,7 @@ public class MakeInitData {
     private final BoardRepository boardRepository;
     private final BCryptPasswordEncoder encoder;
 
-    //@PostConstruct
+    @PostConstruct
     public void make() {
         User admin = User.builder()
                 .loginId("admin")
@@ -31,7 +33,7 @@ public class MakeInitData {
                 .build();
 
         userRepository.save(admin);
-
+/*
         User user = User.builder()
                 .loginId("user")
                 .password(encoder.encode("1234"))
@@ -75,6 +77,6 @@ public class MakeInitData {
                     .commentCnt(0)
                     .likeCnt(0)
                     .build());
-        }
+        }*/
     }
 }

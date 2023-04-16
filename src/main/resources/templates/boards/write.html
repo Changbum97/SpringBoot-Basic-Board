@@ -5,10 +5,15 @@
 <div th:replace="fragments/header.html :: header (${category})"/>
 <div class="row">
     <form class="offset-3 col-6 form-group" th:object="${boardCreateRequest}" th:method="post"
-          th:action="|@{/boards/{category} (category = ${category})}|">
+          th:action="|@{/boards/{category} (category = ${category})}|" enctype="multipart/form-data">
         <div>
             <label th:for="title">제목 : </label>
             <input type="text" th:field="*{title}" style="width: 50%">
+        </div>
+        <br/>
+        <div>
+            <label th:for="uploadImage">이미지 첨부 : </label>
+            <input type="file" th:field="*{uploadImage}" style="width: 50%">
         </div>
         <br/>
         <div>

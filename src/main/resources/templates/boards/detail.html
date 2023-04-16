@@ -6,7 +6,7 @@
 <div class="row">
     <div class="offset-3 col-6">
         <form class="form-group" th:object="${boardDto}" th:method="post"
-              th:action="|@{/boards/{category}/{boardId}/edit (category = ${category}, boardId=${boardDto.id})}|">
+              th:action="|@{/boards/{category}/{boardId}/edit (category = ${category}, boardId=${boardDto.id})}|" enctype="multipart/form-data">
             <div style="float: right;" align="right">
                 <div th:text="'작성일 : ' + ${#temporals.format(boardDto.createdAt, 'yy/MM/dd HH:mm')}"></div>
                 <div th:text="'최근 수정일 : ' + ${#temporals.format(boardDto.lastModifiedAt, 'yy/MM/dd HH:mm')}"></div>
@@ -44,6 +44,17 @@
             <div>
                 <label th:for="body" style="font-size: large">내용 : </label>
                 <textarea rows="10" style="width: 100%;" th:field="*{body}" readonly/>
+            </div>
+            <br/>
+            <div id="image-div1" hidden>
+                <label th:for="newImage">이미지 첨부 : </label>
+                <input type="file" th:field="*{newImage}" style="width: 50%">
+                <br/>
+            </div>
+            <div th:if="${boardDto.uploadImage != null}" id="image-div2">
+                <img th:src="|/boards/images/${boardDto.uploadImage.savedFilename}|"
+                     width="100px" height="100px" style="border-color: black; border-style: solid; border-width: thin;"/> <br/>
+                <a th:href="|/boards/images/download/${boardDto.id}|" th:text="${boardDto.uploadImage.originalFilename} + ' 다운로드'" />
             </div>
             <br/>
             <div id="div2" align="center" hidden>
@@ -112,7 +123,9 @@
 <script th:inline="javascript">
     function clickEdit() {
         document.getElementById("div1").style.display = 'none';
+        document.getElementById("image-div2").style.display = 'none';
         document.getElementById("div2").removeAttribute("hidden");
+        document.getElementById("image-div1").removeAttribute("hidden");
         document.getElementById("title").removeAttribute("readonly");
         document.getElementById("body").removeAttribute("readonly");
     }

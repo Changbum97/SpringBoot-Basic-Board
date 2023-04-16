@@ -8,13 +8,20 @@ import com.study.basicboard.domain.enum_class.BoardCategory;
 import com.study.basicboard.service.BoardService;
 import com.study.basicboard.service.CommentService;
 import com.study.basicboard.service.LikeService;
+import com.study.basicboard.service.UploadImageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
 
 @Controller
 @RequestMapping("/boards")
@@ -24,6 +31,7 @@ public class BoardController {
     private final BoardService boardService;
     private final LikeService likeService;
     private final CommentService commentService;
+    private final UploadImageService uploadImageService;
 
     @GetMapping("/{category}")
     public String boardListPage(@PathVariable String category, Model model,
@@ -73,7 +81,7 @@ public class BoardController {
 
     @PostMapping("/{category}")
     public String boardWrite(@PathVariable String category, @ModelAttribute BoardCreateRequest req,
-                             Authentication auth, Model model) {
+                             Authentication auth, Model model) throws IOException {
         BoardCategory boardCategory = BoardCategory.of(category);
         if (boardCategory == null) {
             model.addAttribute("message", "카테고리가 존재하지 않습니다.");
@@ -117,7 +125,7 @@ public class BoardController {
 
     @PostMapping("/{category}/{boardId}/edit")
     public String boardEdit(@PathVariable String category, @PathVariable Long boardId,
-                            @ModelAttribute BoardDto dto, Model model) {
+                            @ModelAttribute BoardDto dto, Model model) throws IOException {
         Long editedBoardId = boardService.editBoard(boardId, category, dto);
 
         if (editedBoardId == null) {
@@ -147,4 +155,14 @@ public class BoardController {
         return "printMessage";
     }
 
+    @ResponseBody
+    @GetMapping("/images/{filename}")
+    public Resource showImage(@PathVariable String filename) throws MalformedURLException {
+        return new UrlResource("file:" + uploadImageService.getFullPath(filename));
+    }
+
+    @GetMapping("/images/download/{boardId}")
+    public ResponseEntity<UrlResource> downloadImage(@PathVariable Long boardId, Model model) throws MalformedURLException {
+        return uploadImageService.downloadImage(boardId);
+    }
 }

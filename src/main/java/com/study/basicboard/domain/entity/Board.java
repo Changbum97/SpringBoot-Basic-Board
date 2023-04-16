@@ -3,7 +3,6 @@ package com.study.basicboard.domain.entity;
 import com.study.basicboard.domain.BaseEntity;
 import com.study.basicboard.domain.dto.BoardDto;
 import com.study.basicboard.domain.enum_class.BoardCategory;
-import com.study.basicboard.domain.enum_class.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -39,6 +38,9 @@ public class Board extends BaseEntity {
     private List<Comment> comments; // 댓글
     private Integer commentCnt;     // 댓글 수
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private UploadImage uploadImage;
+
     public void update(BoardDto dto) {
         this.title = dto.getTitle();
         this.body = dto.getBody();
@@ -50,6 +52,10 @@ public class Board extends BaseEntity {
 
     public void commentChange(Integer commentCnt) {
         this.commentCnt = commentCnt;
+    }
+
+    public void setUploadImage(UploadImage uploadImage) {
+        this.uploadImage = uploadImage;
     }
 
 }

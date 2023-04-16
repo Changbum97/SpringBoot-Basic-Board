@@ -1,8 +1,10 @@
 package com.study.basicboard.domain.dto;
 
 import com.study.basicboard.domain.entity.Board;
+import com.study.basicboard.domain.entity.UploadImage;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -18,6 +20,8 @@ public class BoardDto {
     private Integer likeCnt;
     private LocalDateTime createdAt;
     private LocalDateTime lastModifiedAt;
+    private MultipartFile newImage;
+    private UploadImage uploadImage;
 
     public static BoardDto of(Board board) {
         return BoardDto.builder()
@@ -29,6 +33,7 @@ public class BoardDto {
                 .createdAt(board.getCreatedAt())
                 .lastModifiedAt(board.getLastModifiedAt())
                 .likeCnt(board.getLikes().size())
+                .uploadImage(board.getUploadImage())
                 .build();
     }
 }
