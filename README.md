@@ -1,5 +1,9 @@
 # Spring Boot 게시판
 
+## 결과
+
+- http://ec2-43-200-173-234.ap-northeast-2.compute.amazonaws.com:8084/
+
 ## 개발 환경
 
 - JAVA 11
