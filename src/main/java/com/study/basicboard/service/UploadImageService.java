@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriUtils;
 
+import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -53,7 +54,9 @@ public class UploadImageService {
                 .build());
     }
 
+    @Transactional
     public void deleteImage(UploadImage uploadImage) throws IOException {
+        uploadImageRepository.delete(uploadImage);
         Files.deleteIfExists(Paths.get(getFullPath(uploadImage.getSavedFilename())));
     }
 
