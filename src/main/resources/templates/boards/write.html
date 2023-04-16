@@ -11,14 +11,15 @@
             <input type="text" th:field="*{title}" style="width: 50%">
         </div>
         <br/>
-        <div>
-            <label th:for="uploadImage">이미지 첨부 : </label>
-            <input type="file" th:field="*{uploadImage}" style="width: 50%">
-        </div>
-        <br/>
+
         <div>
             <label th:for="body">내용 : </label>
             <textarea rows="10" style="width: 100%;" th:field="*{body}"/>
+        </div>
+        <br/>
+        <div>
+            <label th:for="uploadImage">이미지 첨부 : </label>
+            <input type="file" th:field="*{uploadImage}" style="width: 50%">
         </div>
         <br/>
         <div align="center">
