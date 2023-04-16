@@ -141,9 +141,10 @@ public class BoardService {
     public BoardCntDto getBoardCnt(){
         return BoardCntDto.builder()
                 .totalBoardCnt(boardRepository.count())
-                .totalGreetingCnt(boardRepository.countAllByCategory(BoardCategory.GREETING))
-                .totalFreeCnt(boardRepository.countAllByCategory(BoardCategory.FREE))
-                .totalGoldCnt(boardRepository.countAllByCategory(BoardCategory.GOLD))
+                .totalNoticeCnt(boardRepository.countAllByUserUserRole(UserRole.ADMIN))
+                .totalGreetingCnt(boardRepository.countAllByCategoryAndUserUserRoleNot(BoardCategory.GREETING, UserRole.ADMIN))
+                .totalFreeCnt(boardRepository.countAllByCategoryAndUserUserRoleNot(BoardCategory.FREE, UserRole.ADMIN))
+                .totalGoldCnt(boardRepository.countAllByCategoryAndUserUserRoleNot(BoardCategory.GOLD, UserRole.ADMIN))
                 .build();
     }
 }

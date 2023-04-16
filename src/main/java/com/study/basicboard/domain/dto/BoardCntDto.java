@@ -7,6 +7,7 @@ import lombok.Data;
 @Builder
 public class BoardCntDto {
 
+    private Long totalNoticeCnt;
     private Long totalBoardCnt;
     private Long totalGreetingCnt;
     private Long totalFreeCnt;

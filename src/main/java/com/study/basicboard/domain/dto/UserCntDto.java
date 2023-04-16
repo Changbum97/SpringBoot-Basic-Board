@@ -8,6 +8,7 @@ import lombok.Data;
 public class UserCntDto {
 
     private Long totalUserCnt;
+    private Long totalAdminCnt;
     private Long totalBronzeCnt;
     private Long totalSilverCnt;
     private Long totalGoldCnt;

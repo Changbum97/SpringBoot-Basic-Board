@@ -4,9 +4,9 @@
 <body>
     <div th:replace="fragments/header.html :: header ('home')"/>
     <div class="row">
-        <div class="offset-1 col-5 card">
+        <div class="offset-1 col-5 card" style="height: fit-content">
             <div class="card-body">
-                <h2>사용 방법</h2> <br/>
+                <h2>게시판 설명</h2>
                 <h5>&ast; 회원가입을 하면 BRONZE 등급입니다.</h5>
                 <h5>&ast; 가입인사를 남기면 SILVER 등급으로 승급합니다.</h5>
                 <h5>&ast; SILVER 등급 이상의 유저만 자유게시판에 글을 작성할 수 있습니다.</h5>
@@ -23,8 +23,9 @@
         <div class="offset-2 col-3">
             <div class="card" style="height: fit-content">
                 <div class="card-body">
-                    <h2>전체 유저 정보</h2><br/>
+                    <h2>전체 유저 정보</h2>
                     <h5>&ast; 전체 유저: [[${userCntDto.totalUserCnt}]]명</h5>
+                    <h5>&ast; 관리자: [[${userCntDto.totalAdminCnt}]]명</h5>
                     <h5>&ast; BRONZE 유저: [[${userCntDto.totalBronzeCnt}]]명</h5>
                     <h5>&ast; SILVER 유저: [[${userCntDto.totalSilverCnt}]]명</h5>
                     <h5>&ast; GOLD 유저: [[${userCntDto.totalGoldCnt}]]명</h5>
@@ -33,8 +34,9 @@
             </div> <br/>
             <div class="card" style="height: fit-content">
                 <div class="card-body">
-                    <h2>전체 게시판 정보</h2><br/>
+                    <h2>전체 게시판 정보</h2>
                     <h5>&ast; 전체 글: [[${boardCntDto.totalBoardCnt}]]개</h5>
+                    <h5>&ast; 공지: [[${boardCntDto.totalNoticeCnt}]]개</h5>
                     <h5>&ast; 가입 인사: [[${boardCntDto.totalGreetingCnt}]]개</h5>
                     <h5>&ast; 자유게시판 게시글: [[${boardCntDto.totalFreeCnt}]]개</h5>
                     <h5>&ast; 골드게시판 게시글: [[${boardCntDto.totalGoldCnt}]]개</h5>
@@ -43,8 +45,11 @@
         </div>
 </body>
 <style>
+    h2 {
+        margin-bottom: 20px;
+    }
     h5 {
-        margin-bottom: 15px;
+        margin-bottom: 10px;
     }
 </style>
 </html>

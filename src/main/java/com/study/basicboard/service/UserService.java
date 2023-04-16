@@ -140,6 +140,7 @@ public class UserService {
     public UserCntDto getUserCnt() {
         return UserCntDto.builder()
                 .totalUserCnt(userRepository.count())
+                .totalAdminCnt(userRepository.countAllByUserRole(UserRole.ADMIN))
                 .totalBronzeCnt(userRepository.countAllByUserRole(UserRole.BRONZE))
                 .totalSilverCnt(userRepository.countAllByUserRole(UserRole.SILVER))
                 .totalGoldCnt(userRepository.countAllByUserRole(UserRole.GOLD))
