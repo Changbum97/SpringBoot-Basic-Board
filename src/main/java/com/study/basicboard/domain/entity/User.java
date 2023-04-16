@@ -70,7 +70,6 @@ public class User {
         if (userRole.equals(UserRole.BRONZE)) userRole = UserRole.SILVER;
         else if (userRole.equals(UserRole.SILVER)) userRole = UserRole.GOLD;
         else if (userRole.equals(UserRole.GOLD)) userRole = UserRole.BLACKLIST;
-        else if (userRole.equals(UserRole.BLACKLIST)) userRole = UserRole.ADMIN;
-        else userRole = UserRole.BRONZE;
+        else if (userRole.equals(UserRole.BLACKLIST)) userRole = UserRole.BRONZE;
     }
 }
