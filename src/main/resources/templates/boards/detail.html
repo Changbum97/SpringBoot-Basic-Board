@@ -58,7 +58,7 @@
             <button th:if="${category != 'greeting'}" class="btn del-btn" onclick="clickDelete()">삭제</button>
         </div>
         <br/><hr/>
-        <form class="form-group" th:object="${commentCreateRequest}"  th:method="post" th:action="|@{/comments/boards/{boardId} (boardId=${boardDto.id})}|">
+        <form class="form-group" th:object="${commentCreateRequest}"  th:method="post" th:action="|@{/comments/{boardId} (boardId=${boardDto.id})}|">
             <div style="text-align: right">
                 <!-- 로그인 했을 때 -->
                 <div sec:authorize="isAuthenticated()">

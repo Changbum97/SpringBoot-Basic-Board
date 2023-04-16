@@ -17,8 +17,8 @@ public class CommentController {
     private final CommentService commentService;
     private final BoardService boardService;
 
-    @PostMapping("/boards/{boardId}")
-    public String addCommentsToBoard(@PathVariable Long boardId, @ModelAttribute CommentCreateRequest req,
+    @PostMapping("/{boardId}")
+    public String addComments(@PathVariable Long boardId, @ModelAttribute CommentCreateRequest req,
                                      Authentication auth, Model model) {
         commentService.writeComment(boardId, req, auth.getName());
 
