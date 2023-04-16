@@ -46,12 +46,12 @@
                 <textarea rows="10" style="width: 100%;" th:field="*{body}" readonly/>
             </div>
             <br/>
-            <div id="image-div1" hidden>
+            <div id="image-div2" hidden>
                 <label th:for="newImage">이미지 첨부 : </label>
                 <input type="file" th:field="*{newImage}" style="width: 50%">
                 <br/>
             </div>
-            <div th:if="${boardDto.uploadImage != null}" id="image-div2">
+            <div th:if="${boardDto.uploadImage != null}" id="image-div1">
                 이미지 : <a th:href="|/boards/images/download/${boardDto.id}|" th:text="${boardDto.uploadImage.originalFilename}" /> <br/>
                 <img th:src="|/boards/images/${boardDto.uploadImage.savedFilename}|"
                      width="200px" height="200px" style="border-color: black; border-style: solid; border-width: thin;"/>
@@ -122,12 +122,17 @@
 
 <script th:inline="javascript">
     function clickEdit() {
-        document.getElementById("div1").style.display = 'none';
-        document.getElementById("image-div2").style.display = 'none';
-        document.getElementById("div2").removeAttribute("hidden");
-        document.getElementById("image-div1").removeAttribute("hidden");
-        document.getElementById("title").removeAttribute("readonly");
-        document.getElementById("body").removeAttribute("readonly");
+        if (confirm("이미지가 있는 게시글 수정 시 기존의 이미지가 삭제됩니다.\n수정 하시겠습니까?") == true) {
+            alert(123)
+            document.getElementById("div1").style.display = 'none';
+            if (document.getElementById("image-div1") != null) {
+                document.getElementById("image-div1").style.display = 'none';
+            }
+            document.getElementById("div2").removeAttribute("hidden");
+            document.getElementById("image-div2").removeAttribute("hidden");
+            document.getElementById("title").removeAttribute("readonly");
+            document.getElementById("body").removeAttribute("readonly");
+        }
     }
     function clickDelete() {
         if (confirm("해당 글을 삭제 하시겠습니까?") == true) {
@@ -143,6 +148,39 @@
         if (confirm("로그인이 필요한 작업입니다.\n로그인 하시겠습니까?") == true) {
             location.href = "/users/login";
         }
+    }
+
+    $("#newImage").on("change", (e) => {
+
+        let f = e.target.files[0];
+
+        // 확장자 체크 => 이미지 파일이 맞는지
+        let ext = f.name.substr(f.name.lastIndexOf('.')+1).toLowerCase();
+        const acceptType = ['gif','png','jpg','jpeg', 'bmp'];
+
+        if(acceptType.indexOf(ext) == -1) {
+            alert("이미지만 업로드 가능합니다.")
+            delete_image();
+            return;
+        }
+
+        //최대 용량 10MB 초과
+        if (f.size > 10 * 1024 * 1024) {
+            alert("업로드 이미지의 최대 크기는 10MB입니다.");
+            delete_image();
+            return;
+        }
+    });
+
+    function delete_image() {
+        let agent = navigator.userAgent.toLowerCase();
+
+        // 브라우저가 IE인 경우
+        if ( (navigator.appName == 'Netscape' && navigator.userAgent.search('Trident') != -1) || (agent.indexOf("msie") != -1) ){
+            $("#newImage").replaceWith( $("#newImage").clone(true) );
+        } else {
+            $("#newImage").val("");
+       }
     }
 </script>
 </body>

@@ -89,6 +89,7 @@ public class BoardService {
         // 게시글에 이미지가 있었으면 삭제
         if (board.getUploadImage() != null) {
             uploadImageService.deleteImage(board.getUploadImage());
+            board.setUploadImage(null);
         }
 
         UploadImage uploadImage = uploadImageService.saveImage(dto.getNewImage(), board);
