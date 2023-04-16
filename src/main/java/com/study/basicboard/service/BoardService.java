@@ -100,7 +100,7 @@ public class BoardService {
         return board.getId();
     }
 
-    public Long deleteBoard(Long boardId, String category) {
+    public Long deleteBoard(Long boardId, String category) throws IOException {
         Optional<Board> optBoard = boardRepository.findById(boardId);
 
         // id에 해당하는 게시글이 없거나 카테고리가 일치하지 않으면 null return
@@ -110,6 +110,9 @@ public class BoardService {
 
         User boardUser = optBoard.get().getUser();
         boardUser.likeChange(boardUser.getReceivedLikeCnt() - optBoard.get().getLikeCnt());
+        if (optBoard.get().getUser() != null) {
+            uploadImageService.deleteImage(optBoard.get().getUploadImage());
+        }
         boardRepository.deleteById(boardId);
         return boardId;
     }

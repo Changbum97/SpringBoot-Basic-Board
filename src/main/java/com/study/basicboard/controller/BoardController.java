@@ -139,7 +139,7 @@ public class BoardController {
     }
 
     @GetMapping("/{category}/{boardId}/delete")
-    public String boardDelete(@PathVariable String category, @PathVariable Long boardId, Model model) {
+    public String boardDelete(@PathVariable String category, @PathVariable Long boardId, Model model) throws IOException {
         if (category.equals("greeting")) {
             model.addAttribute("message", "가입인사는 삭제할 수 없습니다.");
             model.addAttribute("nextUrl", "/boards/greeting");
@@ -162,7 +162,7 @@ public class BoardController {
     }
 
     @GetMapping("/images/download/{boardId}")
-    public ResponseEntity<UrlResource> downloadImage(@PathVariable Long boardId, Model model) throws MalformedURLException {
+    public ResponseEntity<UrlResource> downloadImage(@PathVariable Long boardId) throws MalformedURLException {
         return uploadImageService.downloadImage(boardId);
     }
 }

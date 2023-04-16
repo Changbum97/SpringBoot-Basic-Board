@@ -52,9 +52,9 @@
                 <br/>
             </div>
             <div th:if="${boardDto.uploadImage != null}" id="image-div2">
+                이미지 : <a th:href="|/boards/images/download/${boardDto.id}|" th:text="${boardDto.uploadImage.originalFilename}" /> <br/>
                 <img th:src="|/boards/images/${boardDto.uploadImage.savedFilename}|"
-                     width="100px" height="100px" style="border-color: black; border-style: solid; border-width: thin;"/> <br/>
-                <a th:href="|/boards/images/download/${boardDto.id}|" th:text="${boardDto.uploadImage.originalFilename} + ' 다운로드'" />
+                     width="200px" height="200px" style="border-color: black; border-style: solid; border-width: thin;"/>
             </div>
             <br/>
             <div id="div2" align="center" hidden>
