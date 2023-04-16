@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -50,7 +51,14 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String loginPage(Model model) {
+    public String loginPage(Model model, HttpServletRequest request) {
+
+        // 로그인 성공 시 이전 페이지로 redirect 되게 하기 위해 세션에 저장
+        String uri = request.getHeader("Referer");
+        if (uri != null && !uri.contains("/login") && !uri.contains("/join")) {
+            request.getSession().setAttribute("prevPage", uri);
+        }
+
         model.addAttribute("userLoginRequest", new UserLoginRequest());
         return "users/login";
     }

@@ -33,7 +33,12 @@ public class MyLoginSuccessHandler implements AuthenticationSuccessHandler {
         if (loginUser.getUserRole().equals(UserRole.BLACKLIST)) {
             pw.println("<script>alert('" + loginUser.getNickname() + "님은 블랙리스트 입니다. 글, 댓글 작성이 불가능합니다.'); location.href='/';</script>");
         } else {
-            pw.println("<script>alert('" + loginUser.getNickname() + "님 반갑습니다!'); location.href='/';</script>");
+            String prevPage = (String) request.getSession().getAttribute("prevPage");
+            if (prevPage != null) {
+                pw.println("<script>alert('" + loginUser.getNickname() + "님 반갑습니다!'); location.href='" + prevPage + "';</script>");
+            } else {
+                pw.println("<script>alert('" + loginUser.getNickname() + "님 반갑습니다!'); location.href='/';</script>");
+            }
         }
         pw.flush();
     }
