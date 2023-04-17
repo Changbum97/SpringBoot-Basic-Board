@@ -47,8 +47,12 @@ public class UploadImageService {
         // 파일 저장
         System.out.println("============2========");
         try {
+            System.out.println(savedFilename);
+            System.out.println(new File(getFullPath(savedFilename)));
             multipartFile.transferTo(new File(getFullPath(savedFilename)));
         } catch (Exception e) {
+            System.out.println("=========2222222222========");
+            e.printStackTrace();
             throw e;
         } finally {
             System.out.println("============3========");
