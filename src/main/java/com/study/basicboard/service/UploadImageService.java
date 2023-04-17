@@ -45,17 +45,20 @@ public class UploadImageService {
         String savedFilename = UUID.randomUUID() + "." + extractExt(originalFilename);
 
         // 파일 저장
-        //File newFile = new File(getFullPath(savedFilename));
         System.out.println("============2========");
-        //multipartFile.transferTo(newFile);
-        multipartFile.transferTo( Paths.get(getFullPath(savedFilename)) );
-        System.out.println("============3========");
+        try {
+            multipartFile.transferTo(new File(getFullPath(savedFilename)));
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            System.out.println("============3========");
 
-        return uploadImageRepository.save(UploadImage.builder()
-                .originalFilename(originalFilename)
-                .savedFilename(savedFilename)
-                .board(board)
-                .build());
+            return uploadImageRepository.save(UploadImage.builder()
+                    .originalFilename(originalFilename)
+                    .savedFilename(savedFilename)
+                    .board(board)
+                    .build());
+        }
     }
 
     @Transactional
