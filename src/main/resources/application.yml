@@ -7,7 +7,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     database: mysql
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 
 # 한글 깨짐 현상 방지 및 포트 변경
 server:
