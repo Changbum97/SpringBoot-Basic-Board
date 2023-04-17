@@ -9,6 +9,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriUtils;
 
@@ -46,9 +47,15 @@ public class UploadImageService {
         String savedFilename = UUID.randomUUID() + "." + extractExt(originalFilename);
 
         // 파일 저장
+            Path uploadDir = Paths.get(fileDir);
+            if (!Files.exists(uploadDir)) {
+                Files.createDirectories(uploadDir);
+            }
+            Path fullPath = uploadDir.resolve(savedFilename);
+            multipartFile.transferTo(fullPath);
         //multipartFile.transferTo(new File(getFullPath(savedFilename)));
-        Path path = Paths.get(getFullPath(savedFilename));
-        Files.copy(multipartFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+//        Path path = Paths.get(getFullPath(savedFilename));
+//        Files.copy(multipartFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 
         return uploadImageRepository.save(UploadImage.builder()
                 .originalFilename(originalFilename)
