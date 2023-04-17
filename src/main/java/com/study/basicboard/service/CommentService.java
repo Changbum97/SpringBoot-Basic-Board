@@ -57,7 +57,7 @@ public class CommentService {
         }
 
         Board board = optComment.get().getBoard();
-        board.commentChange(board.getCommentCnt() + 1);
+        board.commentChange(board.getCommentCnt() - 1);
 
         commentRepository.delete(optComment.get());
         return board.getId();

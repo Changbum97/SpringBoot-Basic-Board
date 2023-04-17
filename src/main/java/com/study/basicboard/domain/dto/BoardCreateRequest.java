@@ -1,7 +1,6 @@
 package com.study.basicboard.domain.dto;
 
 import com.study.basicboard.domain.entity.Board;
-import com.study.basicboard.domain.entity.UploadImage;
 import com.study.basicboard.domain.entity.User;
 import com.study.basicboard.domain.enum_class.BoardCategory;
 import lombok.Data;

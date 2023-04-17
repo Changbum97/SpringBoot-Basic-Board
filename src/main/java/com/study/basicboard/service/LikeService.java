@@ -3,7 +3,6 @@ package com.study.basicboard.service;
 import com.study.basicboard.domain.entity.Board;
 import com.study.basicboard.domain.entity.Like;
 import com.study.basicboard.domain.entity.User;
-import com.study.basicboard.domain.enum_class.UserRole;
 import com.study.basicboard.repository.BoardRepository;
 import com.study.basicboard.repository.LikeRepository;
 import com.study.basicboard.repository.UserRepository;
@@ -11,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

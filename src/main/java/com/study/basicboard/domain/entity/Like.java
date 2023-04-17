@@ -1,6 +1,5 @@
 package com.study.basicboard.domain.entity;
 
-import com.study.basicboard.domain.enum_class.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

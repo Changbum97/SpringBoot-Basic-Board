@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -133,10 +132,6 @@ public class UserController {
                                   @RequestParam(required = false, defaultValue = "1") int page,
                                   @RequestParam(required = false, defaultValue = "") String keyword) throws UnsupportedEncodingException {
         userService.changeRole(userId);
-
-        System.out.println(page);
-        System.out.println(keyword);
-
         return "redirect:/users/admin?page=" + page + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
     }
 
