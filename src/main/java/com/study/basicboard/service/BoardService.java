@@ -92,15 +92,11 @@ public class BoardService {
             board.setUploadImage(null);
         }
 
-        System.out.println("============1========");
         UploadImage uploadImage = uploadImageService.saveImage(dto.getNewImage(), board);
         if (uploadImage != null) {
             board.setUploadImage(uploadImage);
-            System.out.println("============4========");
         }
         board.update(dto);
-        System.out.println("============5========");
-
 
         return board.getId();
     }

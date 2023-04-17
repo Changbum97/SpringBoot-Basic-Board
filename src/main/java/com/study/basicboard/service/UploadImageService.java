@@ -27,8 +27,9 @@ public class UploadImageService {
 
     private final UploadImageRepository uploadImageRepository;
     private final BoardRepository boardRepository;
-    private final String rootPath = System.getProperty("user.dir");
-    private final String fileDir = rootPath + "/src/main/resources/static/upload-images/";
+    //private final String rootPath = System.getProperty("user.dir");
+    //private final String fileDir = rootPath + "/src/main/resources/static/upload-images/";
+    private final String fileDir = "/root/SpringBoot-Basic-Board/src/main/resources/static/upload-images/";
 
     public String getFullPath(String filename) {
         return fileDir + filename;
@@ -45,24 +46,13 @@ public class UploadImageService {
         String savedFilename = UUID.randomUUID() + "." + extractExt(originalFilename);
 
         // 파일 저장
-        System.out.println("============2========");
-        try {
-            System.out.println(savedFilename);
-            System.out.println(new File(getFullPath(savedFilename)));
-            multipartFile.transferTo(new File(getFullPath(savedFilename)));
-        } catch (Exception e) {
-            System.out.println("=========2222222222========");
-            e.printStackTrace();
-            throw e;
-        } finally {
-            System.out.println("============3========");
+        multipartFile.transferTo(new File(getFullPath(savedFilename)));
 
-            return uploadImageRepository.save(UploadImage.builder()
-                    .originalFilename(originalFilename)
-                    .savedFilename(savedFilename)
-                    .board(board)
-                    .build());
-        }
+        return uploadImageRepository.save(UploadImage.builder()
+                .originalFilename(originalFilename)
+                .savedFilename(savedFilename)
+                .board(board)
+                .build());
     }
 
     @Transactional
