@@ -24,20 +24,24 @@
         <table class="table list-table table-hover text-center">
             <thead style="background-color: #A5F1E9">
             <tr>
-                <th style="width: 25%">작성자</th>
-                <th style="width: 40%">제목</th>
-                <th style="width: 10%">좋아요</th>
-                <th style="width: 10%">댓글</th>
+                <th style="width: 16%">게시판</th>
+                <th style="width: 20%">작성자</th>
+                <th style="width: 35%">제목</th>
+                <th style="width: 7%">좋아요</th>
+                <th style="width: 7%">댓글</th>
                 <th style="width: 15%">작성일</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="board: ${boards}"
                 th:onclick="|location.href='@{/boards/{category}/{boardId} (category=${#strings.toLowerCase(board.category)}, boardId=${board.id})}'|">
-                <td style="width: 25%" th:text="${board.user.nickname}"/>
-                <td style="width: 40%" th:text="${board.title}"/>
-                <td style="width: 10%" th:text="${board.likeCnt}"/>
-                <td style="width: 10%" th:text="${board.commentCnt}"/>
+                <td th:if="${#strings.toLowerCase(board.category) == 'greeting'}" style="width: 16%">가입인사</td>
+                <td th:if="${#strings.toLowerCase(board.category) == 'free'}" style="width: 16%">자유게시판</td>
+                <td th:if="${#strings.toLowerCase(board.category) == 'gold'}" style="width: 16%">골드게시판</td>
+                <td style="width: 20%" th:text="${board.user.nickname}"/>
+                <td style="width: 35%" th:text="${board.title}"/>
+                <td style="width: 7%" th:text="${board.likeCnt}"/>
+                <td style="width: 7%" th:text="${board.commentCnt}"/>
                 <td style="width: 15%" th:text="${#temporals.format(board.createdAt, 'yy/MM/dd HH:mm')}"/>
             </tr>
             </tbody>
