@@ -29,12 +29,8 @@ public class UploadImageService {
 
     private final UploadImageRepository uploadImageRepository;
     private final BoardRepository boardRepository;
-    //private final String rootPath = System.getProperty("user.dir");
-    //private final String fileDir = rootPath + "/src/main/resources/static/upload-images/";
-    //private final String fileDir = "/root/SpringBoot-Basic-Board/src/main/resources/static/upload-images/";
-
-    @Value("${file.dir}")
-    private String fileDir;
+    private final String rootPath = System.getProperty("user.dir");
+    private final String fileDir = rootPath + "/src/main/resources/static/upload-images/";
 
     public String getFullPath(String filename) {
         return fileDir + filename;
