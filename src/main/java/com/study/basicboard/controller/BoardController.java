@@ -158,7 +158,6 @@ public class BoardController {
     @ResponseBody
     @GetMapping("/images/{filename}")
     public Resource showImage(@PathVariable String filename) throws MalformedURLException {
-        filename = "aaa.jpeg";
         return new UrlResource("file:" + uploadImageService.getFullPath(filename));
     }
 
