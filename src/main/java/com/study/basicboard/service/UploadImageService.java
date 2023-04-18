@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
@@ -46,7 +47,13 @@ public class UploadImageService {
         String savedFilename = UUID.randomUUID() + "." + extractExt(originalFilename);
 
         // 파일 저장
-        multipartFile.transferTo(new File(getFullPath(savedFilename)));
+        try {
+            Path path = Paths.get(fileDir, savedFilename);
+            Files.createFile(path);
+            multipartFile.transferTo(path);
+        } catch (Exception e) {
+            System.out.println("create file failed");
+        }
 
         return uploadImageRepository.save(UploadImage.builder()
                 .originalFilename(originalFilename)
