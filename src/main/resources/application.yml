@@ -15,6 +15,3 @@ server:
   servlet:
     encoding:
       force-response: true
-
-file:
-  dir: /root/SpringBoot-Basic-Board/src/main/resources/static/upload-images/

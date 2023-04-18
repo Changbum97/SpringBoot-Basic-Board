@@ -34,7 +34,7 @@ public class UploadImageService {
     //private final String fileDir = "/root/SpringBoot-Basic-Board/src/main/resources/static/upload-images/";
 
     @Value("${file.dir}")
-    private final String fileDir;
+    private String fileDir;
 
     public String getFullPath(String filename) {
         return fileDir + filename;
