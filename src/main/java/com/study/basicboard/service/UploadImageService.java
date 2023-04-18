@@ -5,6 +5,7 @@ import com.study.basicboard.domain.entity.UploadImage;
 import com.study.basicboard.repository.BoardRepository;
 import com.study.basicboard.repository.UploadImageRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,10 @@ public class UploadImageService {
     private final BoardRepository boardRepository;
     //private final String rootPath = System.getProperty("user.dir");
     //private final String fileDir = rootPath + "/src/main/resources/static/upload-images/";
-    private final String fileDir = "/root/SpringBoot-Basic-Board/src/main/resources/static/upload-images";
+    //private final String fileDir = "/root/SpringBoot-Basic-Board/src/main/resources/static/upload-images/";
+
+    @Value("${file.dir}")
+    private final String fileDir;
 
     public String getFullPath(String filename) {
         return fileDir + filename;
