@@ -45,13 +45,7 @@ public class UploadImageService {
         String savedFilename = UUID.randomUUID() + "." + extractExt(originalFilename);
 
         // 파일 저장
-        File newFile = new File(getFullPath(savedFilename));
-        try {
-            Thread.sleep(1000);
-        } catch (Exception e) {
-
-        }
-        multipartFile.transferTo(newFile);
+        multipartFile.transferTo(new File(getFullPath(savedFilename)));
 
         return uploadImageRepository.save(UploadImage.builder()
                 .originalFilename(originalFilename)
