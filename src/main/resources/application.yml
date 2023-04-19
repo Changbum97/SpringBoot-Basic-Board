@@ -15,3 +15,17 @@ server:
   servlet:
     encoding:
       force-response: true
+
+# S3 관련
+cloud:
+  aws:
+    s3:
+      bucket:
+    credentials:
+      access-key:
+      secret-key:
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false

@@ -5,10 +5,7 @@ import com.study.basicboard.domain.dto.BoardDto;
 import com.study.basicboard.domain.dto.BoardSearchRequest;
 import com.study.basicboard.domain.dto.CommentCreateRequest;
 import com.study.basicboard.domain.enum_class.BoardCategory;
-import com.study.basicboard.service.BoardService;
-import com.study.basicboard.service.CommentService;
-import com.study.basicboard.service.LikeService;
-import com.study.basicboard.service.UploadImageService;
+import com.study.basicboard.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -31,7 +28,8 @@ public class BoardController {
     private final BoardService boardService;
     private final LikeService likeService;
     private final CommentService commentService;
-    private final UploadImageService uploadImageService;
+    private final S3UploadService s3UploadService;
+    // private final UploadImageService uploadImageService; => 로컬 디렉토리에 저장할 때 사용 => S3UploadService 대신 사용
 
     @GetMapping("/{category}")
     public String boardListPage(@PathVariable String category, Model model,
@@ -158,11 +156,11 @@ public class BoardController {
     @ResponseBody
     @GetMapping("/images/{filename}")
     public Resource showImage(@PathVariable String filename) throws MalformedURLException {
-        return new UrlResource("file:" + uploadImageService.getFullPath(filename));
+        return new UrlResource(s3UploadService.getFullPath(filename));
     }
 
     @GetMapping("/images/download/{boardId}")
     public ResponseEntity<UrlResource> downloadImage(@PathVariable Long boardId) throws MalformedURLException {
-        return uploadImageService.downloadImage(boardId);
+        return s3UploadService.downloadImage(boardId);
     }
 }

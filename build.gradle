@@ -38,6 +38,9 @@ dependencies {
     // Spring Security
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.7.5'
 
+    // S3
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
 }
 
 tasks.named('test') {
