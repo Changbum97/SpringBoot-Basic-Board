@@ -12,6 +12,7 @@
 - Server : AWS EC2
 - Deploy : Docker
 - Database : MySQL 8.0
+- File Storage : AWS S3
 
 ## 라이브러리
 
@@ -21,6 +22,7 @@
 - Spring Security
 - Spring Boot DevTools
 - Thymeleaf, Validation, thymeleaf-extras-springsecurity5
+- Spring Cloud Starter Aws
 
 ## 기능 및 End Point
 
@@ -117,6 +119,21 @@
 - 페이징 기능
   - 한 페이지에 글 10개씩 출력
   - 버튼을 통해 페이지 이동 가능
+
+### 파일 기능
+
+- 파일 업로드 기능
+  - 게시판 글 작성 시 이미지 파일을 업로드 할 수 있음
+  - 하나의 글에 이미지 한 개 (최대 10MB) 업로드 가능
+  - 업로드 한 이미지는 로컬이 아닌 AWS S3 Bucket에 업로드 됨
+- 파일 다운로드 기능
+  - GET /boards/images/download/{boardId}
+  - 게시판 글 조회 페이지에서 글에 추가된 이미지를 다운로드 할 수 있음
+  - 데이터는 ResponseEntity<UrlResource> 타입으로 return
+- 이미지 파일 미리보기 기능
+  - GET /boards/images/{filename}
+  - 게시판 글 조회 페이지에서 글에 추가된 이미지를 미리보기 할 수 있음
+  - filename에 해당하는 이미지를 S3 Bucket에서 찾고, img 태그를 사용해 미리보기 구현
 
 ### 등급 기능
 
