@@ -19,7 +19,7 @@ COPY --from=builder /build/build/libs/Basic-Board-0.0.1-SNAPSHOT.jar .
 EXPOSE 8084
 
 # root 대신 nobody 권한으로 실행
-USER root
+USER nobody
 ENTRYPOINT [ \
    "java", \
    "-jar", \
